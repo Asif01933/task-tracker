@@ -44,7 +44,7 @@ services:
       "--collation-server=utf8mb4_unicode_ci"
     ]
     ports:
-      - "3308:3306"       # host:container
+      - "3310:3306"       # host:container
     volumes:
       - db_data:/var/lib/mysql
     networks:
