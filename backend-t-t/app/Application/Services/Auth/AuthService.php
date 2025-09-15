@@ -62,4 +62,35 @@ class AuthService
             ],
         ];
     }
+
+    public function logout($request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return [
+                'status'  => false,
+                'code'    => 401,
+                'message' => 'Already logged out or token is invalid'
+            ];
+        }
+
+        
+        if (!$user->tokens()->exists()) {
+            return [
+                'status'  => false,
+                'code'    => 400,
+                'message' => 'No active session found'
+            ];
+        }
+
+       
+        $user->currentAccessToken()->delete();
+
+        return [
+            'status'  => true,
+            'code'    => 200,
+            'message' => 'Logged out successfully'
+        ];
+    }
 }
