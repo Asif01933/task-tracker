@@ -12,17 +12,15 @@ class AuthService
 {
 
     public function __construct(private MemberRepositoryInterface $memberRepository) {}
-    public function register(MemberDTO $memberDTO)
+    public function register($request)
     {
-        // Hash the password
-        $memberDTO->password = Hash::make($memberDTO->password);
+        
+        $requestValues = $request->validated();
 
-        // Use repository to save user
-        $member = $this->memberRepository->create([
-            'name' => $memberDTO->name,
-            'email' => $memberDTO->email,
-            'password' => $memberDTO->password,
-        ]);
+        $requestValues['password'] = Hash::make($requestValues['password']);
+
+       
+        $member = $this->memberRepository->create($requestValues);
 
         return [
             'status' => true,

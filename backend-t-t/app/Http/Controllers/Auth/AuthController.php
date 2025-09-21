@@ -21,14 +21,7 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request)
     {
 
-
-        $memberDTO = new MemberDTO(
-            $request->name,
-            $request->email,
-            $request->password
-        );
-
-        return response()->json($this->authService->register($memberDTO));
+        return response()->json($this->authService->register($request));
     }
 
     /**

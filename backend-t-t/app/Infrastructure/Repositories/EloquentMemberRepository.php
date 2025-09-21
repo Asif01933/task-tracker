@@ -9,4 +9,9 @@ class EloquentMemberRepository implements MemberRepositoryInterface{
     {
         return User::create($data);
     }
+
+    public function update($profile,array $data){
+        $profile->update($data);
+        return $profile;
+    }
 }
