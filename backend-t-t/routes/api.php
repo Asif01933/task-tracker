@@ -3,8 +3,9 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\TeamMembers\MemberController;
+use App\Http\Controllers\Tasks\TaskController;
 use App\Http\Controllers\Teams\TeamController;
+use App\Http\Controllers\TeamMembers\MemberController;
 
 // --------------------
 // Authentication Routes
@@ -24,3 +25,9 @@ Route::patch('/me', [MemberController::class, 'myProfileUpdate'])->middleware('a
 // 
 Route::post('/team/create', [TeamController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/team/invite', [TeamController::class, 'invite'])->middleware('auth:sanctum');
+
+
+//--------------------
+// Task Routes
+//
+Route::post('/task/create', [TaskController::class, 'create'])->middleware('auth:sanctum');
