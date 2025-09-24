@@ -17,14 +17,19 @@ class TeamService
         if (!$team) {
             throw new \Exception("Team creation failed");
         }
-
         return [
             'status' => true,
             'code' => 200,
             'message' => 'Team has been created',
             'data' => [
-                'name' => $team->name
+                'name' => $team->name,
+                'members' => $team->teamMembers()
             ]
         ];
+    }
+
+
+    public function invite($request){
+
     }
 }
