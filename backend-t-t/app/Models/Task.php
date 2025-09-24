@@ -12,6 +12,7 @@ class Task extends Model
     use HasUuids;
     // Fillable fields for mass assignment
     protected $fillable = [
+        'uuid',
         'team_id',
         'member_id',
         'title',
