@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->uuid('id')->primary(); // varchar(36) UUID primary key
             $table->foreignId('team_id')->constrained('teams'); // reference to teams.id
-            $table->foreignId('user_id')->constrained('users'); // assigned user, nullable
+            $table->uuid('member_id'); // assigned user, nullable
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('category');
-            $table->string('priority');
-            $table->string('status');
+            $table->string('priority')->nullable();
+            $table->string('status')->nullable();
 
             $table->timestamps(); // created_at & updated_at
         });

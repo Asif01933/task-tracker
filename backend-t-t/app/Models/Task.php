@@ -1,22 +1,30 @@
-<?php 
+<?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-class TeamMembers extends Model{
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Task extends Model
+{
     use HasFactory;
     use HasUuids;
-
     // Fillable fields for mass assignment
     protected $fillable = [
         'team_id',
-        'user_id',
-        'role',
+        'member_id',
+        'title',
+        'category',
         'status'
     ];
+
+    public function teamMember(){
+        return $this->belongsTo(TeamMember::class);
+    }
 
     public function team(){
         return $this->belongsTo(Team::class);
     }
+    
 }
