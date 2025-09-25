@@ -32,3 +32,4 @@ Route::post('/team/invite', [TeamController::class, 'invite'])->middleware('auth
 //
 Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
+Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');

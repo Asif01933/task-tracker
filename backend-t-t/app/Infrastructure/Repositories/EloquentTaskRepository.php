@@ -20,4 +20,8 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
         return $task;
     }
 
+    public function delete($task){
+        $task->delete();
+    }
+
 }

@@ -56,4 +56,15 @@ class TaskService{
             'data' => $task
         ];
     }
+
+    public function delete($task){
+        
+        $this->taskRepositoryInterface->delete($task);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Task deleted successfully'
+        ];
+    }
 }

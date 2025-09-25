@@ -20,4 +20,8 @@ class TaskController extends Controller{
     public function update(TaskUpdateRequest $request, Task $task){
         return response()->json($this->taskService->update($request, $task));
     }
+
+    public function delete(Task $task){
+        return response()->json($this->taskService->delete($task));
+    }
 }
