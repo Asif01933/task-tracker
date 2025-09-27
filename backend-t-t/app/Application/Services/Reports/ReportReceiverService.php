@@ -31,6 +31,7 @@ class ReportReceiverService{
 
     public function update($request, $receiver){
 
+        $this->reportReceiverInterface->update($request->validated(), $receiver);
 
         return [
             'status' => true,
