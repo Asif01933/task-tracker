@@ -11,4 +11,8 @@ class EloquentReportReceiverRepository implements ReportReceiverInterface{
     public function view($team){
         return $team->receivers;
     }
+
+    public function update($data, $receiver){
+        return $receiver->fill($data);
+    }
 }

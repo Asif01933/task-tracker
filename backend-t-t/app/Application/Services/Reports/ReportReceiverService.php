@@ -28,4 +28,14 @@ class ReportReceiverService{
             'message' => 'Vailable report reeivers'
         ];
     }
+
+    public function update($request, $receiver){
+
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'receiver updated successfully'
+        ];
+    }
 }
