@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Tasks\TaskController;
 use App\Http\Controllers\Teams\TeamController;
+use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\TeamMembers\MemberController;
 
 // --------------------
@@ -30,4 +31,12 @@ Route::post('/team/invite', [TeamController::class, 'invite'])->middleware('auth
 //--------------------
 // Task Routes
 //
-Route::post('/task/create', [TaskController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
+Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
+Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
+
+
+//-----
+//Reports
+///
+Route::get('/reports/{team}/download', [ReportController::class, 'download'])->middleware('auth:sanctum');
