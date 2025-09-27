@@ -17,4 +17,15 @@ class ReportReceiverService{
             'message' => 'Email is added successfully'
         ];
     }
+
+    public function reportReceivers($team){
+        $receivers = $this->reportReceiverInterface->view($team);
+
+        return [
+            'data' => $receivers,
+            'status' => true,
+            'code' => 200,
+            'message' => 'Vailable report reeivers'
+        ];
+    }
 }

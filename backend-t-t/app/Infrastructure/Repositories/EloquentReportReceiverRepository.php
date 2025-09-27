@@ -8,4 +8,7 @@ class EloquentReportReceiverRepository implements ReportReceiverInterface{
     public function create(array $data){
         return ReportReceiver::create($data);
     }
+    public function view($team){
+        return $team->receivers;
+    }
 }

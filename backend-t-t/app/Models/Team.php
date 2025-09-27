@@ -31,4 +31,8 @@ class Team extends Model
     public function tasks(){
         return $this->hasMany(Task::class);
     }
+
+    public function receivers(){
+        return $this->hasMany(ReportReceiver::class);
+    }
 }

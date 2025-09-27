@@ -15,5 +15,7 @@ class ReportReceiver extends Model
         'team_id',
     ];
 
-   
+    public function team(){
+        return $this->belongsTo(Team::class);
+    }
 }
