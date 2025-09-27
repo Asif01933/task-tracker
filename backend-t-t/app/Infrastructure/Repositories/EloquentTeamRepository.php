@@ -3,8 +3,9 @@
 namespace App\Infrastructure\Repositories;
 
 use App\Models\Team;
-use App\Domain\Interfaces\TeamRepositoryInterface;
 use App\Models\TeamMember;
+use App\Models\TeamInvitation;
+use App\Domain\Interfaces\TeamRepositoryInterface;
 
 class EloquentTeamRepository implements TeamRepositoryInterface{
     public function create(array $data)
@@ -18,6 +19,10 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         ]);
         
         return $team;
+    }
+
+    public function invite(array $data){
+        return TeamInvitation::create($data);
     }
 
     

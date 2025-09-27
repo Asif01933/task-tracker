@@ -25,8 +25,8 @@ Route::patch('/me', [MemberController::class, 'myProfileUpdate'])->middleware('a
 // --------------------
 // Team Routes
 // 
-Route::post('/team/create', [TeamController::class, 'create'])->middleware('auth:sanctum');
-Route::post('/team/invite', [TeamController::class, 'invite'])->middleware('auth:sanctum');
+Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/teams/invite', [TeamController::class, 'invite'])->middleware('auth:sanctum');
 
 
 //--------------------
