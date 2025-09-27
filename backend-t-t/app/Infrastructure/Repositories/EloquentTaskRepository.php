@@ -14,4 +14,14 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
         return Task::create($data);
     }
 
+    public function update($task, array $data){
+        $task->fill($data);
+        $task->save();
+        return $task;
+    }
+
+    public function delete($task){
+        $task->delete();
+    }
+
 }

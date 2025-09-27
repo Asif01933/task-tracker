@@ -39,4 +39,32 @@ class TaskService{
 
 
     }
+
+    public function update($request, $task){
+        
+        $task = $this->taskRepositoryInterface->update($task, $request->validated());
+
+        if(!$task){
+            throw new \Exception("Task update is not successful");
+            
+        }
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Task updated successfully',
+            'data' => $task
+        ];
+    }
+
+    public function delete($task){
+        
+        $this->taskRepositoryInterface->delete($task);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Task deleted successfully'
+        ];
+    }
 }
