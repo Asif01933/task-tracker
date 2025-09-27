@@ -44,3 +44,4 @@ Route::get('/reports/{team}/download', [ReportController::class, 'download'])->m
 Route::post('/report-receivers', [ReportReceiverController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/report-receivers/{team}', [ReportReceiverController::class, 'view'])->middleware('auth:sanctum');
 Route::patch('/report-receivers/{report_receiver}', [ReportReceiverController::class, 'update'])->middleware('auth:sanctum');
+
