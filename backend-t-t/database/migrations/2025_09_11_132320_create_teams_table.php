@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id(); // id BIGINT PK AUTO_INCREMENT
             $table->string('name');
             $table->foreignId('owner_id')->constrained('users'); // foreign key to users.id
-            $table->string('report_email')->nullable();
             $table->integer('report_frequency')->nullable();
             $table->timestamp('last_email_sent')->nullable();
             $table->timestamps(); // created_at & updated_at

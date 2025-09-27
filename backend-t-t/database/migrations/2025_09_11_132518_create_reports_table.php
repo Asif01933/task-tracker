@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->uuid('id')->primary(); // varchar(36) UUID primary key
             $table->foreignId('team_id')->constrained('teams'); // reference to teams.id
-            $table->foreignId('user_id')->constrained('users'); // reference to users.id
+            $table->foreignId('member_id')->constrained('team_members'); 
             $table->string('sent_to'); // email or recipient
             $table->timestamps(); // created_at & updated_at
         });

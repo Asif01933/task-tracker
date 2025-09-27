@@ -7,6 +7,7 @@ use App\Http\Controllers\Tasks\TaskController;
 use App\Http\Controllers\Teams\TeamController;
 use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\TeamMembers\MemberController;
+use App\Http\Controllers\Reports\ReportReceiverController;
 
 // --------------------
 // Authentication Routes
@@ -40,3 +41,4 @@ Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('a
 //Reports
 ///
 Route::get('/reports/{team}/download', [ReportController::class, 'download'])->middleware('auth:sanctum');
+Route::post('/report-receivers', [ReportReceiverController::class, 'create'])->middleware('auth:sanctum');

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // reference to users.id
             $table->string('role')->nullable();
             $table->boolean('want_report')->default(false);
+            $table->boolean('reporting')->default(true);
             $table->string('status')->nullable();
             $table->string('invited_email')->nullable();
             $table->timestamps(); // created_at & updated_at
