@@ -5,6 +5,7 @@ use App\Models\Team;
 
 interface TeamRepositoryInterface{
     public function create(array $data);
-    public function invite(array $data);
+    
+    
     
 }

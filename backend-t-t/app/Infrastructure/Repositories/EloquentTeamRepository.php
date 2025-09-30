@@ -21,9 +21,6 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         return $team;
     }
 
-    public function invite(array $data){
-        return TeamInvitation::create($data);
-    }
 
     
 }
