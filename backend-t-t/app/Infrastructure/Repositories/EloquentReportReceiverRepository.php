@@ -13,6 +13,8 @@ class EloquentReportReceiverRepository implements ReportReceiverInterface{
     }
 
     public function update($data, $receiver){
-        return $receiver->fill($data);
+        $receiver->fill($data);
+        $receiver->save();
+        return $receiver;
     }
 }
