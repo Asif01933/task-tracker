@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Teams\TeamCreateRequest;
 use App\Http\Requests\Teams\TeamInviteRequest;
 use App\Application\Services\Teams\TeamService;
+use App\Http\Requests\Teams\TeamInvitationAcceptRequest;
 
 
 class TeamController extends Controller{
@@ -15,8 +16,4 @@ class TeamController extends Controller{
         return response()->json($this->teamService->create($request));
     }
 
-
-    public function invite(TeamInviteRequest $request){
-        return response()->json($this->teamService->invite($request));
-    }
 }

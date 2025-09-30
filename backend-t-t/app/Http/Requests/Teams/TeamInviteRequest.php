@@ -44,7 +44,7 @@ class TeamInviteRequest extends FormRequest
 
             // Ensure email is not already in the team
             $user = User::where('email', $this->email)->first();
-            if ($user && $this->team->members()->where('user_id', $user->id)->exists()) {
+            if ($user && $this->team->teamMembers()->where('user_id', $user->id)->exists()) {
                 $validator->errors()->add('email', 'This user is already part of the team.');
             }
         });

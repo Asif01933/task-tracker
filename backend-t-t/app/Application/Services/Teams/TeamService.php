@@ -2,6 +2,10 @@
 
 namespace App\Application\Services\Teams;
 
+use Illuminate\Support\Str;
+use App\Models\TeamInvitation;
+use Illuminate\Support\Facades\Mail;
+use App\Infrastructure\Mail\TeamInvitationMail;
 use App\Domain\Interfaces\TeamRepositoryInterface;
 
 class TeamService
@@ -28,8 +32,4 @@ class TeamService
         ];
     }
 
-
-    public function invite($request){
-
-    }
 }

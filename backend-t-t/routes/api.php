@@ -1,4 +1,5 @@
 <?php 
+use App\Http\Controllers\Invitation\InvitationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,9 +26,9 @@ Route::patch('/me', [MemberController::class, 'myProfileUpdate'])->middleware('a
 // --------------------
 // Team Routes
 // 
-Route::post('/team/create', [TeamController::class, 'create'])->middleware('auth:sanctum');
-Route::post('/team/invite', [TeamController::class, 'invite'])->middleware('auth:sanctum');
-
+Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/teams/invite', [InvitationController::class, 'invite'])->middleware('auth:sanctum');
+Route::post('/teams/invite/accept', [InvitationController::class, 'acceptInvitation'])->middleware('auth:sanctum');
 
 //--------------------
 // Task Routes
