@@ -32,4 +32,8 @@ class TeamService
         ];
     }
 
+    public function update($request, $team){
+        $validatedRequest = $request->validated;
+    }
+
 }

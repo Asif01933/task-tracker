@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Reports;
+namespace App\Http\Requests\Teams;
 
 use App\Models\TeamMember;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReportReceiverUpdateRequest extends FormRequest
+class TeamUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +22,10 @@ class ReportReceiverUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:report_receivers,id',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('report_receivers', 'email')->ignore($this->report_receiver->id),
-            ],
+            'name'    => ['sometimes|string'],
+            'frequency'   => ['sometimes|integer'],
         ];
     }
+
+    
 }

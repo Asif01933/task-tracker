@@ -29,7 +29,7 @@ Route::patch('/me', [MemberController::class, 'myProfileUpdate'])->middleware('a
 Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/teams/invite', [InvitationController::class, 'invite'])->middleware('auth:sanctum');
 Route::post('/teams/invite/accept', [InvitationController::class, 'acceptInvitation'])->middleware('auth:sanctum');
-
+Route::patch('/teams/{team}', [TeamController::class, 'update'])->middleware('auth:sanctum');
 //--------------------
 // Task Routes
 //
