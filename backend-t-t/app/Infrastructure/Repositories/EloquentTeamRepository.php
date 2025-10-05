@@ -27,6 +27,10 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         return $team;
     }
 
+    public function findById($id){
+        return Team::find($id);
+    }
+
 
     
 }

@@ -7,5 +7,7 @@ interface TeamRepositoryInterface{
     public function create(array $data);
     
     public function update(array $data, $team);
+
+    public function findById($id);
     
 }
