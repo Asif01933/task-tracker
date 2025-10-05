@@ -21,6 +21,12 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         return $team;
     }
 
+    public function update(array $data, $team){
+        $team->fill($data);
+        $team->save();
+        return $team;
+    }
+
 
     
 }

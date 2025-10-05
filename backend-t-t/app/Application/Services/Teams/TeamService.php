@@ -34,6 +34,14 @@ class TeamService
 
     public function update($request, $team){
         $validatedRequest = $request->validated;
+        $team = $this->teamRepository->update($validatedRequest, $team);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Team information updated successfully'
+        ];
+        
     }
 
 }
