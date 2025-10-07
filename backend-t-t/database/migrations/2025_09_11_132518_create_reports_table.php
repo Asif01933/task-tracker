@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('due_date'); 
             $table->boolean('is_sent')->default(false);
             $table->dateTime('sent_at')->nullable();
+            $table->integer('report_frequency')->nullable();
             $table->timestamps(); // created_at & updated_at
         });
     }

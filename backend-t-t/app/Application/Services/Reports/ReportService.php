@@ -28,12 +28,43 @@ class ReportService{
         //extracting last 'n' days report
         $team = $this->teamRepositoryInterface->findById($report->team_id);
         $member = $this->memberRepositoryInterface->findTeamMember($report->team_id, $report->member_id);
-        $frequency = $team->report_frequency;
+        
 
         $startDate = $report->due_date;
-        $endDate = \Carbon\Carbon::parse($report->due_date)->subDays($frequency);
+        $endDate = \Carbon\Carbon::parse($report->due_date)->subDays($report->report_frequency);
 
-        $rawReports = $this->taskRepositoryInterface->getTasksByRange($startDate, $endDate, $team->id, $report->memberId);
+        $reports = $this->generateReport($startDate, $endDate, $team->id, $member->id);
+
+        $reportReceivers = $this->reportReceiverInterface->view($team);
+
+        $emails = [];
+        if($member->want_report){
+            $emails[] = $member->user->email;
+        }
+        foreach($reportReceivers as $receiver){
+            $emails[] = $receiver->email;
+        }
+
+        foreach ($emails as $email) {
+            Mail::to($email)->send(new SendReportMail($reports['categoryWise'], $reports['dateWise'], $startDate, $endDate));
+        }
+
+        
+        $this->reportRepositoryInterface->update($report);
+        
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'mail sent successfully'
+        ];
+
+
+    }
+
+    public function generateReport($startDate, $endDate, $teamId, $memberId){
+
+        $rawReports = $this->taskRepositoryInterface->getTasksByRange($startDate, $endDate, $teamId, $memberId);
         
         $dateWiseReport = [];
 
@@ -54,31 +85,9 @@ class ReportService{
                 'status' => $report->status
             ];
         }
-
-        $reportReceivers = $this->reportReceiverInterface->view($team);
-
-        $emails = [];
-        if($member->want_report){
-            $emails[] = $member->user->email;
-        }
-        foreach($reportReceivers as $receiver){
-            $emails[] = $receiver->email;
-        }
-
-        foreach ($emails as $email) {
-            Mail::to($email)->send(new SendReportMail($categoryWiseReport, $dateWiseReport, $startDate, $endDate));
-        }
-
-        
-        $this->reportRepositoryInterface->update($report);
-        
-
         return [
-            'status' => true,
-            'code' => 200,
-            'message' => 'mail sent successfully'
+            'dateWise' => $dateWiseReport,
+            'categoryWise' => $categoryWiseReport
         ];
-
-
     }
 }
