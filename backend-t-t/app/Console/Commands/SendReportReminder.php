@@ -66,6 +66,9 @@ class SendReportReminder extends Command
 
             }
         }
+
+        $this->info('Reports sent successfully!');
+        return Command::SUCCESS;
     }
 
     
