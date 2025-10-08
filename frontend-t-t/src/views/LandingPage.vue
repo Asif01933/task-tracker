@@ -1,30 +1,49 @@
 <template>
-  <div class="landing-page">
-    <header class="header">
-      <h1>Task Tracker</h1>
-      <nav>
-        <a href="#features">Features</a>
-        <a href="#login">Login</a>
+  <div class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Task Tracker</h1>
+      <nav class="space-x-4">
+        <button @click="goToLogin" class="hover:underline">Login</button>
+        <button @click="goToLogin" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 transition-all">
+          Get Started
+        </button>
       </nav>
     </header>
 
-    <section class="hero">
-      <h2>Manage your tasks efficiently</h2>
-      <p>Track tasks, assign to team members, and generate reports easily.</p>
-      <button @click="goToLogin">Get Started</button>
+    <!-- Hero Section -->
+    <section class="flex-1 flex flex-col justify-center items-center text-center bg-gradient-to-b from-blue-500 to-indigo-700 text-white px-4">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Manage your tasks efficiently</h2>
+      <p class="text-lg md:text-xl mb-6 max-w-xl">
+        Track tasks, assign them to team members, and generate reports easily. Boost productivity with a clean and intuitive interface.
+      </p>
+      <button @click="goToLogin" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-all">
+        Get Started
+      </button>
     </section>
 
-    <section id="features">
-      <h3>Features</h3>
-      <ul>
-        <li>Create and assign tasks</li>
-        <li>Team management</li>
-        <li>Generate PDF reports</li>
-      </ul>
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-100 text-center">
+      <h3 class="text-3xl font-bold mb-8">Features</h3>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+          <h4 class="text-xl font-semibold mb-2">Task Management</h4>
+          <p>Create, assign, and track tasks for your team effortlessly.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+          <h4 class="text-xl font-semibold mb-2">Team Collaboration</h4>
+          <p>Manage team members, roles, and assignments in one place.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-all">
+          <h4 class="text-xl font-semibold mb-2">Reports</h4>
+          <p>Generate PDF reports for tasks and monitor productivity.</p>
+        </div>
+      </div>
     </section>
 
-    <footer>
-      <p>Contact: support@tasktracker.com</p>
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white text-center py-6">
+      <p>© {{ new Date().getFullYear() }} Task Tracker. Contact: support@tasktracker.com</p>
     </footer>
   </div>
 </template>
@@ -34,45 +53,12 @@ export default {
   name: "LandingPage",
   methods: {
     goToLogin() {
-      alert("Redirect to login page (Vue Router will handle this later)");
+      this.$router.push({ name: "Login" });
     }
   }
 };
 </script>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background: #333;
-  color: #fff;
-}
-.header a {
-  color: #fff;
-  margin-left: 15px;
-  text-decoration: none;
-}
-.hero {
-  text-align: center;
-  margin-top: 100px;
-}
-.hero button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-section {
-  padding: 50px;
-  text-align: center;
-}
-footer {
-  background: #333;
-  color: #fff;
-  padding: 20px;
-}
+<style scoped>
+/* Optional: add custom styles if needed */
 </style>
