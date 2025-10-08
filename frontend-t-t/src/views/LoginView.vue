@@ -1,82 +1,91 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
-      <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+  <div class="min-h-screen flex flex-col">
+    <!-- Header (same as Landing Page) -->
+    <header class="bg-blue-600 text-white p-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Task Tracker</h1>
+      <nav class="space-x-4">
+        <button @click="$router.push({ name: 'Landing' })" class="hover:underline">Home</button>
+      </nav>
+    </header>
 
-      <form @submit.prevent="handleLogin" class="space-y-4">
-        <div>
-          <label class="block mb-1 font-medium">Email</label>
-          <input
-            v-model="email"
-            type="email"
-            placeholder="you@example.com"
-            class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
+    <!-- Login Form Section -->
+    <section class="flex-1 flex items-center justify-center bg-gradient-to-b from-blue-500 to-indigo-700 text-white px-4">
+      <div class="bg-white text-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Login to Task Tracker</h2>
 
-        <div>
-          <label class="block mb-1 font-medium">Password</label>
-          <input
-            v-model="password"
-            type="password"
-            placeholder="********"
-            class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
+        <form @submit.prevent="handleLogin" class="space-y-4">
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              id="email"
+              v-model="email"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
 
-        <button
-          type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-all"
-          :disabled="loading"
-        >
-          <span v-if="loading">Logging in...</span>
-          <span v-else>Login</span>
-        </button>
-      </form>
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              required
+              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
 
-      <p v-if="error" class="text-red-500 mt-4 text-center">{{ error }}</p>
-    </div>
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-all"
+          >
+            Login
+          </button>
+        </form>
+
+        <!-- Error Message -->
+        <p v-if="error" class="mt-4 text-red-500 text-sm text-center">{{ error }}</p>
+      </div>
+    </section>
+
+    <!-- Footer (same color scheme as Landing Page) -->
+    <footer class="bg-blue-600 text-white text-center py-6">
+      <p>© {{ new Date().getFullYear() }} Task Tracker. Contact: support@tasktracker.com</p>
+    </footer>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
-  name: "LoginView",
+  name: "LoginPage",
   data() {
     return {
       email: "",
       password: "",
-      loading: false,
-      error: "",
+      error: ""
     };
   },
   methods: {
     async handleLogin() {
       this.error = "";
-      this.loading = true;
       try {
-        const response = await axios.post("http://192.168.10.42:8003/api/login", {
+        const response = await axios.post('http://192.168.10.42:8003/api/login', {
           email: this.email,
-          password: this.password,
+          password: this.password
         });
 
-        // Example: save token in localStorage
-        localStorage.setItem("token", response.data.token);
-
-        // Redirect to dashboard
-        this.$router.push("/dashboard");
+        localStorage.setItem('token', response.data.token);
+        this.$router.push({ name: 'Landing' }); // or dashboard page
       } catch (err) {
-        console.error(err);
-        this.error =
-          err.response?.data?.message || "Login failed. Please try again.";
-      } finally {
-        this.loading = false;
+        this.error = err.response?.data?.message || 'Login failed. Please try again.';
       }
-    },
-  },
+    }
+  }
 };
 </script>
