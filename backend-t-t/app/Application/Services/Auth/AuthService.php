@@ -3,23 +3,25 @@
 namespace App\Application\Services\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Application\DTOs\MemberDTO;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 use App\Domain\Interfaces\MemberRepositoryInterface;
-
+use Google\Client as GoogleClient;
 class AuthService
 {
 
     public function __construct(private MemberRepositoryInterface $memberRepository) {}
     public function register($request)
     {
-        
+
         $requestValues = $request->validated();
 
         $requestValues['password'] = Hash::make($requestValues['password']);
 
-       
+
         $member = $this->memberRepository->create($requestValues);
 
         return [
@@ -61,6 +63,50 @@ class AuthService
         ];
     }
 
+    public function googleLogin($request)
+    {
+
+
+
+
+
+        try {
+            $validatedRequest = $request->validated();
+            // Get user info from Google using Socialite (stateless)
+            $client = new GoogleClient(['client_id' => env('GOOGLE_CLIENT_ID')]);
+
+            // Verify the token and get payload
+            $payload = $client->verifyIdToken($validatedRequest['credential']);
+
+            
+
+            $email = $payload['email'];
+            $name = $payload['name'] ?? 'Unknown';
+
+            // Create or update user based on email only
+            $user = User::updateOrCreate(
+                ['email' => $email],
+                [
+                    'name' => $name,
+                    'password' => bcrypt(Str::random(16)), // random password
+                ]
+            );
+
+            return [
+                'status'  => true,
+                'code'    => 200,
+                'message' => 'Login successful',
+                'token'   => $user->createToken('API Token')->plainTextToken,
+                'data'    => [
+                    'name' => $user->name,
+                    'email' => $user->email
+                ],
+            ];
+        } catch (\Exception $e) {
+            throw new \Exception("Google login failed");
+            
+        }
+    }
     public function logout($request)
     {
         $user = $request->user();
@@ -73,7 +119,7 @@ class AuthService
             ];
         }
 
-        
+
         if (!$user->tokens()->exists()) {
             return [
                 'status'  => false,
@@ -82,7 +128,7 @@ class AuthService
             ];
         }
 
-       
+
         $user->currentAccessToken()->delete();
 
         return [

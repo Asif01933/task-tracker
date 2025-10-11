@@ -8,6 +8,7 @@ use App\Application\DTOs\MemberDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Application\Services\Auth\AuthService;
+use App\Http\Requests\Auth\GoogleLoginRequest;
 use App\Http\Requests\Auth\RegistrationRequest;
 
 class AuthController extends Controller
@@ -37,6 +38,10 @@ class AuthController extends Controller
         );
 
         return response()->json($this->authService->login($memberDto));
+    }
+
+    public function googleLogin(GoogleLoginRequest $googleLoginRequest){
+        return response()->json($this->authService->googleLogin($googleLoginRequest));
     }
 
     public function logout(Request $request)
