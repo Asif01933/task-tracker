@@ -78,8 +78,6 @@ class AuthService
             // Verify the token and get payload
             $payload = $client->verifyIdToken($validatedRequest['credential']);
 
-            
-
             $email = $payload['email'];
             $name = $payload['name'] ?? 'Unknown';
 
