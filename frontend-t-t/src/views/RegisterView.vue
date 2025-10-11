@@ -102,7 +102,7 @@
 
 <script>
 import axios from "axios";
-
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export default {
   name: "RegisterView",
   data() {
@@ -113,8 +113,10 @@ export default {
       confirmPassword: "",
       error: "",
       success: "",
+      GOOGLE_CLIENT_ID: import.meta.env.GOOGLE_CLIENT_ID,
     };
   },
+  
   mounted() {
     // Load Google Identity Services
     const script = document.createElement("script");
@@ -164,8 +166,9 @@ export default {
 
     // Initialize Google login button
     initializeGoogleSignIn() {
+      console.log(this.GOOGLE_CLIENT_ID)
       window.google.accounts.id.initialize({
-        client_id: "",
+        client_id: GOOGLE_CLIENT_ID,
         callback: this.handleGoogleResponse,
       });
 
@@ -178,7 +181,7 @@ export default {
 
     async handleGoogleResponse(response) {
       try {
-        const res = await axios.post("http://192.168.10.42:8003/api/auth/google", {
+        const res = await axios.post("http://192.168.10.42:8003/api/google/login", {
           credential: response.credential,
         });
 
