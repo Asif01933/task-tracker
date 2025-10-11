@@ -113,7 +113,6 @@ export default {
       confirmPassword: "",
       error: "",
       success: "",
-      GOOGLE_CLIENT_ID: import.meta.env.GOOGLE_CLIENT_ID,
     };
   },
   

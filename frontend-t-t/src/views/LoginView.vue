@@ -46,7 +46,14 @@
             Login
           </button>
         </form>
-
+        <!-- Divider -->
+        <div class="flex items-center my-4">
+          <hr class="flex-1 border-gray-300" />
+          <span class="mx-3 text-gray-500 text-sm">OR</span>
+          <hr class="flex-1 border-gray-300" />
+        </div>
+        <!-- Google Button -->
+        <div id="googleButton" class="flex justify-center"></div>
         <!-- Error Message -->
         <p v-if="error" class="mt-4 text-red-500 text-sm text-center">{{ error }}</p>
       </div>
@@ -61,7 +68,7 @@
 
 <script>
 import axios from 'axios'
-
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export default {
   name: "LoginPage",
   data() {
@@ -70,6 +77,15 @@ export default {
       password: "",
       error: ""
     };
+  },
+  mounted() {
+    // Load Google Identity Services
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = this.initializeGoogleSignIn;
+    document.head.appendChild(script);
   },
   methods: {
     async handleLogin() {
@@ -85,7 +101,38 @@ export default {
       } catch (err) {
         this.error = err.response?.data?.message || 'Login failed. Please try again.';
       }
-    }
+    },
+    // Initialize Google login button
+    initializeGoogleSignIn() {
+      console.log(this.GOOGLE_CLIENT_ID)
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: this.handleGoogleResponse,
+      });
+
+      window.google.accounts.id.renderButton(document.getElementById("googleButton"), {
+        theme: "outline",
+        size: "large",
+        width: 300,
+      });
+    },
+
+    async handleGoogleResponse(response) {
+      try {
+        const res = await axios.post("http://192.168.10.42:8003/api/google/login", {
+          credential: response.credential,
+        });
+
+        localStorage.setItem("auth_token", res.data.token);
+        this.success = "Google sign-up successful! Redirecting...";
+        setTimeout(() => {
+          this.$router.push({ name: "Dashboard" });
+        }, 1500);
+      } catch (error) {
+        this.error = "Google sign-in failed. Please try again.";
+        console.error("Google login error:", error);
+      }
+    },
   }
 };
 </script>
