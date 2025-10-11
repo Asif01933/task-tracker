@@ -10,10 +10,15 @@
     </header>
 
     <!-- Registration Form Section -->
-    <section class="flex-1 flex items-center justify-center bg-gradient-to-b from-blue-500 to-indigo-700 text-white px-4">
+    <section
+      class="flex-1 flex items-center justify-center bg-gradient-to-b from-blue-500 to-indigo-700 text-white px-4"
+    >
       <div class="bg-white text-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Create Your Account</h2>
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">
+          Create Your Account
+        </h2>
 
+        <!-- Form -->
         <form @submit.prevent="handleRegister" class="space-y-4">
           <!-- Name -->
           <div>
@@ -72,6 +77,16 @@
           </button>
         </form>
 
+        <!-- Divider -->
+        <div class="flex items-center my-4">
+          <hr class="flex-1 border-gray-300" />
+          <span class="mx-3 text-gray-500 text-sm">OR</span>
+          <hr class="flex-1 border-gray-300" />
+        </div>
+
+        <!-- Google Button -->
+        <div id="googleButton" class="flex justify-center"></div>
+
         <!-- Error Message -->
         <p v-if="error" class="mt-4 text-red-500 text-sm text-center">{{ error }}</p>
         <p v-if="success" class="mt-4 text-green-500 text-sm text-center">{{ success }}</p>
@@ -86,7 +101,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "RegisterView",
@@ -97,8 +112,17 @@ export default {
       password: "",
       confirmPassword: "",
       error: "",
-      success: ""
+      success: "",
     };
+  },
+  mounted() {
+    // Load Google Identity Services
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = this.initializeGoogleSignIn;
+    document.head.appendChild(script);
   },
   methods: {
     async handleRegister() {
@@ -121,23 +145,60 @@ export default {
         return;
       }
 
-      // API Call
       try {
-        const response = await axios.post('http://192.168.10.42:8003/api/register', {
+        const response = await axios.post("http://192.168.10.42:8003/api/register", {
           name: this.name,
           email: this.email,
           password: this.password,
-          password_confirmation: this.confirmPassword
+          password_confirmation: this.confirmPassword,
         });
 
         this.success = "Registration successful! Redirecting to login...";
         setTimeout(() => {
-          this.$router.push({ name: 'Login' });
+          this.$router.push({ name: "Login" });
         }, 2000);
       } catch (err) {
         this.error = err.response?.data?.message || "Registration failed. Please try again.";
       }
-    }
-  }
+    },
+
+    // Initialize Google login button
+    initializeGoogleSignIn() {
+      window.google.accounts.id.initialize({
+        client_id: "",
+        callback: this.handleGoogleResponse,
+      });
+
+      window.google.accounts.id.renderButton(document.getElementById("googleButton"), {
+        theme: "outline",
+        size: "large",
+        width: 300,
+      });
+    },
+
+    async handleGoogleResponse(response) {
+      try {
+        const res = await axios.post("http://192.168.10.42:8003/api/auth/google", {
+          credential: response.credential,
+        });
+
+        localStorage.setItem("auth_token", res.data.token);
+        this.success = "Google sign-up successful! Redirecting...";
+        setTimeout(() => {
+          this.$router.push({ name: "Dashboard" });
+        }, 1500);
+      } catch (error) {
+        this.error = "Google sign-in failed. Please try again.";
+        console.error("Google login error:", error);
+      }
+    },
+  },
 };
 </script>
+
+<style scoped>
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+</style>
