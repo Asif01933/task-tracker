@@ -8,13 +8,11 @@ use App\Domain\Interfaces\TeamRepositoryInterface;
 use App\Domain\Interfaces\MemberRepositoryInterface;
 use App\Domain\Interfaces\ReportRepositoryInterface;
 use App\Domain\Interfaces\InvitationReporistoryInterface;
-use App\Domain\Interfaces\ReportRepositoryInterface;
 use App\Infrastructure\Repositories\EloquentTaskRepository;
 use App\Infrastructure\Repositories\EloquentTeamRepository;
 use App\Infrastructure\Repositories\EloquentMemberRepository;
 use App\Infrastructure\Repositories\EloquentInvitationRepository;
 use App\Infrastructure\Repositories\EloquentReportReceiverRepository;
-use App\Infrastructure\Repositories\EloquentReportRepository;
 use App\Infrastructure\Repositories\EloquentReportRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
