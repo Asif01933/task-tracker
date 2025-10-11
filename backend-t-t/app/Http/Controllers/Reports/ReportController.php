@@ -1,11 +1,15 @@
 <?php 
 namespace App\Http\Controllers\Reports;
 
+use App\Application\Services\Reports\ReportService;
 use App\Models\Team;
-use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
+
 class ReportController extends Controller{
 
+    public function __construct(private ReportService $reportService){}
     public function download(Team $team){
         
         $tasks = $team->tasks;
@@ -14,5 +18,10 @@ class ReportController extends Controller{
 
         // Force download
         return $pdf->download("task-report-{$team->id}.pdf");
+    }
+
+    public function send(Report $report){
+        
+        return response()->json($this->reportService->send($report));
     }
 }

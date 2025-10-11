@@ -24,4 +24,12 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
         $task->delete();
     }
 
+    public function getTasksByRange($startDate, $endDate, $teamId, $memberId){
+        
+        return Task::where('team_id', $teamId)
+            ->where('member_id', $memberId)
+            ->whereBetween('created_at', [$endDate, $startDate])
+            ->get();
+    }
+
 }

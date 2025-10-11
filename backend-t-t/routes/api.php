@@ -43,6 +43,7 @@ Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('a
 //Reports
 ///
 Route::get('/reports/{team}/download', [ReportController::class, 'download'])->middleware('auth:sanctum');
+Route::post('/reports/{report}/send', [ReportController::class, 'send'])->middleware('auth:sanctum');
 Route::post('/report-receivers', [ReportReceiverController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/report-receivers/{team}', [ReportReceiverController::class, 'view'])->middleware('auth:sanctum');
 Route::patch('/report-receivers/{report_receiver}', [ReportReceiverController::class, 'update'])->middleware('auth:sanctum');
