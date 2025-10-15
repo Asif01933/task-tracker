@@ -1,0 +1,1143 @@
+{
+	"info": {
+		"_postman_id": "e0bec3f7-49e8-4a51-8c9d-8f74afff1213",
+		"name": "TaskTracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30765091"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/register",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/register",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"asif@gmail.com\",\n    \"password\": \"01933611794\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"asif@gmail.com\",\n    \"password\": \"01933611794\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/login",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Login successful\",\n    \"token\": \"9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481\",\n    \"data\": {\n        \"name\": \"Asif Hayat\",\n        \"email\": \"asif@gmail.com\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "google login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"credential\":\"eyJhbGciOiJSUzI1NiIsImtpZCI6ImM4YWI3MTUzMDk3MmJiYTIwYjQ5Zjc4YTA5Yzk4NTJjNDNmZjkxMTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MDAxNTk1OTEzNjEtNjA4Zml2cDk4bnFsNGF2NG02cDdscDNxNHQzNDFyY2cuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MDAxNTk1OTEzNjEtNjA4Zml2cDk4bnFsNGF2NG02cDdscDNxNHQzNDFyY2cuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDYwMDI0NzM0MjEyODA0NTQwODciLCJlbWFpbCI6ImRwdGRldjAzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYmYiOjE3NjAxODU3ODUsIm5hbWUiOiJBc2lmIEhheWF0IiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lkOU0yekR2dTUxYVFqdEZibEJlWlRDa05aQmZRMHBMb19aTEtUNGhXZGp6eFFjdz1zOTYtYyIsImdpdmVuX25hbWUiOiJBc2lmIiwiZmFtaWx5X25hbWUiOiJIYXlhdCIsImlhdCI6MTc2MDE4NjA4NSwiZXhwIjoxNzYwMTg5Njg1LCJqdGkiOiJiZjljMWRiYTA3OTQ4NjU1Yjk2MzRjY2I2OTkwZGQ0NTc2YmZkNGI5In0.t_RramMg8zy_KwfqdNOsjnBeqgPLh3tBLG2UQC3O9Ik38xMu4ddl-0Ylo3w1N-6XfloHJ8BkGPw2VjD_SmBSIsPU1QfEZRlKNa8gfEnx4Dz_usOB9GYI9gr0a6vrF861VQp48DSWtTI3GQdByXTCTJ0NWo6SSF0CdH-oKSvtU9mEXW2g5rQQxBHTmW26xu_xXHS9-ejQ58gyEtOIllQyMkLJaHYkaiaKmvIbZp4Le1xDljuOeWNjHvBVvTOu4ue5Oq9LUIyLf_7mCd-tqmcUeSbAV-8ETOZoq6jjaiy_Er0XZGZFruLq9nSBJ3xD6K1nYBHYLopZuUDSI2yvnUIPGw\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/google/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"google",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team Members",
+			"item": [
+				{
+					"name": "My-Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/me",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "My-Profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/me",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"me"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Profile fetched successfully\",\n    \"data\": {\n        \"name\": \"Asif Hayat\",\n        \"email\": \"asif@gmail.com\",\n        \"lastUpdatedAt\": \"2025-10-08T07:10:35.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "My-Profile update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Asif Hayat\",\n    \"email\": \"hello@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/me",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "My-Profile update",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Asif Hayat\",\n    \"email\": \"hello@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/me",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"me"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Your profile is updated\",\n    \"data\": {\n        \"name\": \"Asif Hayat\",\n        \"email\": \"hello@gmail.com\",\n        \"lastUpdatedAt\": \"2025-10-15T10:21:07.000000Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Team",
+			"item": [
+				{
+					"name": "team create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Popular IT\"\n}"
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/teams",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"teams"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "team create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Popular IT\"\n}"
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/teams",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"teams"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.28.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.29"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Oct 2025 10:22:08 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Team has been created\",\n    \"data\": {\n        \"name\": \"Popular IT\",\n        \"members\": {}\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "Task Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team_id\": 1,\n    \"title\": \"1A ndc bugfix\",\n    \"category\": \"bugfix\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/tasks",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Task Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"team_id\": 1,\n    \"title\": \"1A ndc bugfix\",\n    \"category\": \"bugfix\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/tasks",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.28.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.29"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Oct 2025 10:22:44 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": false,\n    \"message\": \"Task created successfully\",\n    \"data\": {\n        \"team_id\": 1,\n        \"title\": \"1A ndc bugfix\",\n        \"category\": \"bugfix\",\n        \"member_id\": \"0199e764-36e6-700c-9873-d66c6fca00bf\",\n        \"id\": \"0199e764-c299-72cf-8b81-50da032f6012\",\n        \"updated_at\": \"2025-10-15T10:22:44.000000Z\",\n        \"created_at\": \"2025-10-15T10:22:44.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"yes this should be updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/tasks/0199e764-c299-72cf-8b81-50da032f6012",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"tasks",
+								"0199e764-c299-72cf-8b81-50da032f6012"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"yes this should be updated\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/tasks/0199e764-c299-72cf-8b81-50da032f6012",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"tasks",
+										"0199e764-c299-72cf-8b81-50da032f6012"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.28.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.29"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Oct 2025 10:23:41 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Task updated successfully\",\n    \"data\": {\n        \"id\": \"0199e764-c299-72cf-8b81-50da032f6012\",\n        \"team_id\": 1,\n        \"member_id\": \"0199e764-36e6-700c-9873-d66c6fca00bf\",\n        \"title\": \"yes this should be updated\",\n        \"description\": null,\n        \"category\": \"bugfix\",\n        \"priority\": null,\n        \"status\": null,\n        \"created_at\": \"2025-10-15T10:22:44.000000Z\",\n        \"updated_at\": \"2025-10-15T10:23:41.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/tasks/0199e764-c299-72cf-8b81-50da032f6012",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"tasks",
+								"0199e764-c299-72cf-8b81-50da032f6012"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/tasks/0199e764-c299-72cf-8b81-50da032f6012",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"tasks",
+										"0199e764-c299-72cf-8b81-50da032f6012"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.28.0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.29"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Oct 2025 10:24:18 GMT"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"code\": 200,\n    \"message\": \"Task deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Download",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "9|51MVom6k44xgLM170ZpMzQf4b2iz1TtY2xhBBpyx3cbb0481",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/pdf",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/reports/1/download",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"reports",
+								"1",
+								"download"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Download",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://192.168.10.42:8003/api/reports/1/download",
+									"protocol": "http",
+									"host": [
+										"192",
+										"168",
+										"10",
+										"42"
+									],
+									"port": "8003",
+									"path": [
+										"api",
+										"reports",
+										"1",
+										"download"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "create report receiver",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|xiDELWLbzVoDB3pUxDqT2tT6MPFFa5TAjsKgrk3de13cc790",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hello@gmail.com\",\n    \"team_id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/report-receivers",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"report-receivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report-receivers",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invitation",
+			"item": [
+				{
+					"name": "invite",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"team_id\": 1,\n    \"email\": \"hel@g.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/teams/invite",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"teams",
+								"invite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "6|BeHNlyBV7RgaxtiFH95NfDI3xyVugDSYVaMM6qp70d452417",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"aef822d4-a27b-47db-8541-05a861a3da12\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.42:8003/api/teams/invite/accept",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"42"
+							],
+							"port": "8003",
+							"path": [
+								"api",
+								"teams",
+								"invite",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
