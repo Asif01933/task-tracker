@@ -15,3 +15,7 @@ RUN docker-php-ext-install opcache
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
+
+# Add a user to ensure we don't run as root
+RUN groupadd -g 1000 laravel && useradd -u 1000 -g laravel -s /bin/bash laravel
+USER laravel
