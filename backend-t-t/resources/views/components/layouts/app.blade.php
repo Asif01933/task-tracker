@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Livewire Landing Page</title>
+    <title>Task Tracker</title>
     @livewireStyles
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
