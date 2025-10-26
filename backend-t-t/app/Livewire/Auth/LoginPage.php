@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Auth;
 
+use App\Application\DTOs\MemberDTO;
+use App\Application\Services\Auth\AuthService;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 
@@ -13,9 +15,13 @@ class LoginPage extends Component
 
     protected $listeners = ['googleLogin'];
 
+    private $authService;
+    public function boot(AuthService $authService){
+        $this->authService = $authService;
+    }
     public function goHome()
     {
-        return redirect()->route('landing');
+        return redirect('/');
     }
 
     public function handleLogin()
@@ -25,22 +31,26 @@ class LoginPage extends Component
             'password' => 'required|min:6',
         ]);
 
-        try {
-            $response = Http::post(config('app.api_url') . '/login', [
-                'email' => $this->email,
-                'password' => $this->password,
-            ]);
+        $memberDto = new MemberDTO(
+            '',
+            $this->email,
+            $this->password
+        );
 
-            if ($response->failed()) {
-                $this->errorMessage = $response->json('message') ?? 'Login failed. Please try again.';
-                return;
-            }
+        // Call the service
+        $response = $this->authService->login($memberDto);
 
-            session(['token' => $response->json('token')]);
-            return redirect()->route('dashboard');
-        } catch (\Exception $e) {
-            $this->errorMessage = 'Something went wrong. Please try again later.';
+        // Handle response
+        if (!$response['status']) {
+            $this->errorMessage = $response['message'];
+            return; // Stop execution here and show error
         }
+
+        // ✅ If login successful, store token or redirect
+        session(['token' => $response['token']]);
+
+        return redirect('/'); // Make sure this route exists
+        
     }
 
     public function googleLogin($payload)

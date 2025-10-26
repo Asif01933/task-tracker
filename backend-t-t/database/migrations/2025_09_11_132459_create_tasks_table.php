@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('status')->nullable();
 
             $table->timestamps(); // created_at & updated_at
+            $table->foreign('member_id')->references('id')->on('team_members')->onDelete('cascade');
         });
     }
 

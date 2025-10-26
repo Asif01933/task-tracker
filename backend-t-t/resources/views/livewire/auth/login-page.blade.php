@@ -9,7 +9,7 @@
 
     <!-- Login Form Section -->
     <section
-        class="flex-1 flex items-center justify-center bg-gradient-to-b from-emerald-500 to-teal-600 text-white px-4">
+        class="flex-1 flex items-center justify-center bg-gradient-to-br from-emerald-500 via-teal-500 to-green-400 text-white px-4">
         <div class="bg-white text-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-gray-900">Login to Task Tracker</h2>
 
@@ -60,28 +60,3 @@
         <p>© {{ date('Y') }} Task Tracker. Contact: support@tasktracker.com</p>
     </footer>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener('livewire:load', () => {
-            const script = document.createElement("script");
-            script.src = "https://accounts.google.com/gsi/client";
-            script.async = true;
-            script.defer = true;
-            script.onload = () => {
-                window.google.accounts.id.initialize({
-                    client_id: "{{ env('GOOGLE_CLIENT_ID') }}",
-                    callback: (response) => {
-                        Livewire.dispatch('googleLogin', { credential: response.credential });
-                    }
-                });
-                window.google.accounts.id.renderButton(document.getElementById("googleButton"), {
-                    theme: "outline",
-                    size: "large",
-                    width: 300,
-                });
-            };
-            document.head.appendChild(script);
-        });
-    </script>
-@endpush

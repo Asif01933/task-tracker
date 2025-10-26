@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->uuid('id')->primary(); // varchar(36) UUID primary key
             $table->foreignId('team_id')->constrained('teams'); // reference to teams.id
-            $table->foreignId('member_id')->constrained('team_members'); 
+            $table->uuid('member_id');
             $table->dateTime('due_date'); 
             $table->boolean('is_sent')->default(false);
             $table->dateTime('sent_at')->nullable();
             $table->integer('report_frequency')->nullable();
             $table->timestamps(); // created_at & updated_at
+            $table->foreign('member_id')->references('id')->on('team_members')->onDelete('cascade');
         });
     }
 
