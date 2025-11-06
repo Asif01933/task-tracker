@@ -31,6 +31,7 @@ Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanct
 Route::post('/teams/invite', [InvitationController::class, 'invite'])->middleware('auth:sanctum');
 Route::post('/teams/invite/accept', [InvitationController::class, 'acceptInvitation'])->middleware('auth:sanctum');
 Route::patch('/teams/{team}', [TeamController::class, 'update'])->middleware('auth:sanctum');
+Route::get('/teams', [TeamController::class, 'myTeams'])->middleware('auth:sanctum');
 //--------------------
 // Task Routes
 //

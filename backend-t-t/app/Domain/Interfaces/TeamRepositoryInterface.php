@@ -9,5 +9,6 @@ interface TeamRepositoryInterface{
     public function update(array $data, $team);
 
     public function findById($id);
+    public function myTeams($id);
     
 }

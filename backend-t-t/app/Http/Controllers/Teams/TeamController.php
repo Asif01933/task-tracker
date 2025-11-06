@@ -8,7 +8,7 @@ use App\Http\Requests\Teams\TeamInviteRequest;
 use App\Http\Requests\Teams\TeamUpdateRequest;
 use App\Application\Services\Teams\TeamService;
 use App\Http\Requests\Teams\TeamInvitationAcceptRequest;
-
+use Illuminate\Http\Request;
 
 class TeamController extends Controller{
 
@@ -20,6 +20,10 @@ class TeamController extends Controller{
 
     public function update(TeamUpdateRequest $request, Team $team){
         return response()->json($this->teamService->update($request, $team));
+    }
+
+    public function myTeams(Request $request){
+        return response()->json($this->teamService->myTeams($request));
     }
 
 }

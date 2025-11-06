@@ -31,6 +31,17 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         return Team::find($id);
     }
 
+    public function myTeams($id){
+        $members = TeamMember::where('user_id', $id)->get();
+
+        $teams = [];
+
+        foreach($members as $member){
+            $teams[] = $member->team;
+        }
+        return $teams;
+    }
+
 
     
 }

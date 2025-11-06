@@ -4,9 +4,10 @@
     <header class="bg-white shadow-sm border-b border-gray-100 p-6 flex justify-between items-center sticky top-0 z-10">
         <h1 class="text-2xl font-bold text-emerald-600">Task Tracker</h1>
         <nav class="space-x-6 text-gray-700 font-medium">
-            <button wire:click="goToLogin" class="hover:text-emerald-600 transition-colors">Login</button>
-            <button wire:click="goToRegister" class="hover:text-emerald-600 transition-colors">Register</button>
-            <button wire:click="scrollToFeatures" class="hover:text-emerald-600 transition-colors">Features</button>
+            <button wire:click="goToLogin"
+                class="hover:text-emerald-600 transition-colors cursor-pointer">Login</button>
+            <button wire:click="goToRegister"
+                class="hover:text-emerald-600 transition-colors cursor-pointer">Register</button>
         </nav>
     </header>
 

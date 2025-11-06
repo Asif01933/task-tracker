@@ -49,7 +49,7 @@ class LoginPage extends Component
         // ✅ If login successful, store token or redirect
         session(['token' => $response['token']]);
 
-        return redirect('/'); // Make sure this route exists
+        return redirect('/dashboard'); // Make sure this route exists
         
     }
 

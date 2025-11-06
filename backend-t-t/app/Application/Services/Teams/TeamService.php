@@ -44,4 +44,18 @@ class TeamService
         
     }
 
+
+    public function myTeams($request){
+        $myTeams = $this->teamRepository->myTeams($request->user()->id);
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Your team fetched successfully',
+            'data' => $myTeams
+        ];
+    }
+
+
+    
+
 }
