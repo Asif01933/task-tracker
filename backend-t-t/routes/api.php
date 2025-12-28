@@ -38,7 +38,7 @@ Route::get('/teams', [TeamController::class, 'myTeams'])->middleware('auth:sanct
 Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
 Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
-
+Route::get('/tasks', [TaskController::class, 'tasks'])->middleware('auth:sanctum');
 
 //-----
 //Reports

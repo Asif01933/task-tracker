@@ -32,4 +32,19 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
             ->get();
     }
 
+    public function tasks($userId, $endDate, $startDate){
+        return Task::query()
+        ->when($userId, function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+        ->when($startDate, function ($q) use ($startDate) {
+            $q->whereDate('created_at', '>=', $startDate);
+        })
+        ->when($endDate, function ($q) use ($endDate) {
+            $q->whereDate('created_at', '<=', $endDate);
+        })
+        ->latest()
+        ->paginate(10);
+    }
+
 }

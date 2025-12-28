@@ -67,4 +67,9 @@ class TaskService{
             'message' => 'Task deleted successfully'
         ];
     }
+
+    public function tasks($request){
+
+        return $this->taskRepositoryInterface->tasks($request->user_id, $request->end_date, $request->start_date);
+    }
 }
