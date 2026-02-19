@@ -31,14 +31,18 @@ Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanct
 Route::post('/teams/invite', [InvitationController::class, 'invite'])->middleware('auth:sanctum');
 Route::post('/teams/invite/accept', [InvitationController::class, 'acceptInvitation'])->middleware('auth:sanctum');
 Route::patch('/teams/{team}', [TeamController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/teams/{team}', [TeamController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/teams', [TeamController::class, 'myTeams'])->middleware('auth:sanctum');
+Route::get('/teams/{team}', [TeamController::class, 'view'])->middleware('auth:sanctum');
+
 //--------------------
 // Task Routes
 //
 Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
 Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
-Route::get('/tasks', [TaskController::class, 'tasks'])->middleware('auth:sanctum');
+Route::get('/tasks/team/{team}', [TaskController::class, 'list'])->middleware('auth:sanctum');
+Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');Route::get('/tasks', [TaskController::class, 'tasks'])->middleware('auth:sanctum');
 
 //-----
 //Reports

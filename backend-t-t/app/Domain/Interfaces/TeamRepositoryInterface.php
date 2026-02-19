@@ -10,5 +10,9 @@ interface TeamRepositoryInterface{
 
     public function findById($id);
     public function myTeams($id);
+
+    public function delete($team);
+
+    public function list();
     
 }

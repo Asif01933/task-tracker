@@ -43,5 +43,16 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
     }
 
 
+    public function delete($team){
+        $team->delete();
+        
+    }
+
+    public function list(){
+        return Team::all();
+    }
+
+
+
     
 }

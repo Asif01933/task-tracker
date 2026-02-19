@@ -22,8 +22,8 @@ class TeamUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => ['sometimes|string'],
-            'frequency'   => ['sometimes|integer'],
+            'name'    => ['required', 'string'],
+            'frequency'   => ['sometimes','integer'],
         ];
     }
 

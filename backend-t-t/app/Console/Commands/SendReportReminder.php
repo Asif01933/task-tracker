@@ -70,7 +70,7 @@ class SendReportReminder extends Command
                     // Save new report record
                     $data = [
                         'team_id' => $team->id,
-                        'member_id' => $member->id,
+                        'team_member_id' => $member->id,
                         'due_date' => $today,
                         'report_frequency' => $team->report_frequency,
                     ];

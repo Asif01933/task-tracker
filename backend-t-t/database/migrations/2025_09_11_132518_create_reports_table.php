@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->uuid('id')->primary(); // varchar(36) UUID primary key
             $table->foreignId('team_id')->constrained('teams'); // reference to teams.id
-            $table->uuid('member_id');
+            $table->foreignUuid('team_member_id')
+                    ->constrained('team_members')
+                    ->cascadeOnDelete();
             $table->dateTime('due_date'); 
             $table->boolean('is_sent')->default(false);
             $table->dateTime('sent_at')->nullable();

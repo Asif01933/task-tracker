@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->uuid('id')->primary(); // varchar(36) UUID primary key
             $table->foreignId('team_id')->constrained('teams'); // reference to teams.id
-            $table->uuid('member_id'); // assigned user, nullable
+            $table->foreignUuid('team_member_id')
+            ->constrained('team_members')
+            ->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('category');

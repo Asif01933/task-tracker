@@ -13,7 +13,7 @@ class Report extends Model
     // Fillable fields for mass assignment
     protected $fillable = [
         'team_id',
-        'member_id',
+        'team_member_id',
         'due_date',
         'report_frequency',
     ];

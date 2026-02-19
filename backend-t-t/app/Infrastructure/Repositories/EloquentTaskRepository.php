@@ -27,7 +27,7 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
     public function getTasksByRange($startDate, $endDate, $teamId, $memberId){
         
         return Task::where('team_id', $teamId)
-            ->where('member_id', $memberId)
+            ->where('team_member_id', $memberId)
             ->whereBetween('created_at', [$endDate, $startDate])
             ->get();
     }
@@ -45,6 +45,14 @@ class EloquentTaskRepository implements TaskRepositoryInterface{
         })
         ->latest()
         ->paginate(10);
+    }
+
+    public function listByTeam($teamId){
+        return Task::where('team_id', $teamId)->get();
+    }
+
+    public function listByMember($memberId){
+        return Task::where('team_member_id', $memberId)->get();
     }
 
 }

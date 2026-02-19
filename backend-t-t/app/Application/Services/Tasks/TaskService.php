@@ -21,7 +21,7 @@ class TaskService{
             throw new \Exception("You are not a member of this team");
             
         }
-        $validatedData['member_id'] = $teamMember->id;
+        $validatedData['team_member_id'] = $teamMember->id;
 
         $task = $this->taskRepositoryInterface->create($validatedData);
 
@@ -32,7 +32,7 @@ class TaskService{
 
         return [
             'status' => true,
-            'code' => false,
+            'code' => 200,
             'message' => 'Task created successfully',
             'data' => $task
         ];
@@ -71,5 +71,27 @@ class TaskService{
     public function tasks($request){
 
         return $this->taskRepositoryInterface->tasks($request->user_id, $request->end_date, $request->start_date);
+    }
+
+    public function list($teamId){
+        $tasks = $this->taskRepositoryInterface->listByTeam($teamId);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Tasks retrieved successfully',
+            'data' => $tasks
+        ];
+    }
+
+    public function selfTasks(){
+        $tasks = $this->taskRepositoryInterface->listByMember(auth()->user()->id);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Tasks retrieved successfully',
+            'data' => $tasks
+        ];
     }
 }

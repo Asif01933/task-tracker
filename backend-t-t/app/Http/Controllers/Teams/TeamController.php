@@ -26,4 +26,16 @@ class TeamController extends Controller{
         return response()->json($this->teamService->myTeams($request));
     }
 
+    public function delete(Team $team){
+        return response()->json($this->teamService->delete($team));
+    }
+
+    public function list(){
+        return response()->json($this->teamService->list());
+    }
+
+    public function view(Team $team){
+        return response()->json($this->teamService->view($team));
+    }
+
 }

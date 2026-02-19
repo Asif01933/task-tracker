@@ -29,4 +29,12 @@ class TaskController extends Controller{
     public function tasks(TasksRequest $tasksRequest){
         return response()->json($this->taskService->tasks($tasksRequest));
     }
+
+    public function list($teamId){
+        
+        return response()->json($this->taskService->list($teamId));
+    }
+    public function selfTasks(){
+        return response()->json($this->taskService->selfTasks());
+    }
 }

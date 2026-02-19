@@ -33,7 +33,9 @@ class TeamService
     }
 
     public function update($request, $team){
-        $validatedRequest = $request->validated;
+        $validatedRequest = $request->validated();
+        // echo json_encode($validatedRequest);
+        // die();
         $team = $this->teamRepository->update($validatedRequest, $team);
 
         return [
@@ -57,5 +59,33 @@ class TeamService
 
 
     
+
+    public function delete($team){
+        $this->teamRepository->delete($team);
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Team deleted successfully'
+        ];
+    }
+
+    public function list(){
+        $teams = $this->teamRepository->list();
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Teams retrieved successfully',
+            'data' => $teams
+        ];
+    }
+
+    public function view($team){
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Team retrieved successfully',
+            'data' => $team
+        ];
+    }
 
 }

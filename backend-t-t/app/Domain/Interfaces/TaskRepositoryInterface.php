@@ -8,5 +8,7 @@ interface TaskRepositoryInterface{
     public function delete($task);
     public function tasks($userId, $endDate, $startDate);
     public function getTasksByRange($startDate, $endDate, $teamId, $memberId);
+    public function listByTeam($teamId);
+    public function listByMember($memberId);
     
 }
