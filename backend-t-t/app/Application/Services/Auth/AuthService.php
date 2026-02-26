@@ -28,7 +28,8 @@ class AuthService
             'status' => true,
             'code' => 200,
             'message' => 'User registered successfully',
-            'data' => $member
+            'data' => $member,
+            'token'   => $member->createToken('API Token')->plainTextToken,
         ];
     }
 
