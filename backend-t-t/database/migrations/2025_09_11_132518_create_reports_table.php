@@ -22,7 +22,7 @@ return new class extends Migration
             $table->dateTime('sent_at')->nullable();
             $table->integer('report_frequency')->nullable();
             $table->timestamps(); // created_at & updated_at
-            $table->foreign('member_id')->references('id')->on('team_members')->onDelete('cascade');
+            
         });
     }
 
