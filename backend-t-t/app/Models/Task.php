@@ -16,6 +16,7 @@ class Task extends Model
         'team_id',
         'team_member_id',
         'title',
+        'description',
         'category',
         'status'
     ];
@@ -26,6 +27,10 @@ class Task extends Model
 
     public function team(){
         return $this->belongsTo(Team::class);
+    }
+
+    public function labels(){
+        return $this->belongsToMany(Label::class);
     }
     
 }

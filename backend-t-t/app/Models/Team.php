@@ -36,5 +36,7 @@ class Team extends Model
         return $this->hasMany(ReportReceiver::class);
     }
 
-    
+    public function labels(){
+        return $this->hasMany(Label::class);
+    }
 }

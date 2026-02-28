@@ -1,14 +1,13 @@
 <?php 
-use App\Http\Controllers\Invitation\InvitationController;
-use Illuminate\Support\Facades\Route;
-
-
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Tasks\TaskController;
-use App\Http\Controllers\Teams\TeamController;
+use App\Http\Controllers\Invitation\InvitationController;
+use App\Http\Controllers\Misc\LabelController;
 use App\Http\Controllers\Reports\ReportController;
-use App\Http\Controllers\TeamMembers\MemberController;
 use App\Http\Controllers\Reports\ReportReceiverController;
+use App\Http\Controllers\Tasks\TaskController;
+use App\Http\Controllers\TeamMembers\MemberController;
+use App\Http\Controllers\Teams\TeamController;
+use Illuminate\Support\Facades\Route;
 
 // --------------------
 // Authentication Routes
@@ -53,3 +52,21 @@ Route::post('/report-receivers', [ReportReceiverController::class, 'create'])->m
 Route::get('/report-receivers/{team}', [ReportReceiverController::class, 'view'])->middleware('auth:sanctum');
 Route::patch('/report-receivers/{report_receiver}', [ReportReceiverController::class, 'update'])->middleware('auth:sanctum');
 
+
+// -------------------------------------------------------------------------
+    // Label routes (team-scoped)
+    // -------------------------------------------------------------------------
+Route::prefix('teams/{team}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
+    Route::get('/',          'index');    // GET    /api/teams/{team}/labels
+    Route::post('/',         'store');    // POST   /api/teams/{team}/labels
+    Route::put('/{label}',   'update');   // PUT    /api/teams/{team}/labels/{label}
+    Route::delete('/{label}','destroy');  // DELETE /api/teams/{team}/labels/{label}
+    });
+
+    // -------------------------------------------------------------------------
+    // Task label routes (attach / detach)
+    // -------------------------------------------------------------------------
+Route::prefix('tasks/{task}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
+    Route::post('/',             'attach');  // POST   /api/tasks/{task}/labels
+    Route::delete('/{label}',    'detach');  // DELETE /api/tasks/{task}/labels/{label}
+});
