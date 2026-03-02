@@ -69,8 +69,40 @@ class TaskService{
     }
 
     public function tasks($request){
+        
 
-        return $this->taskRepositoryInterface->tasks($request->user_id, $request->end_date, $request->start_date);
+         $tasks = $this->taskRepositoryInterface->tasks([
+            'user_id'    => $request->input('user_id'),
+            'team_id'    => $request->input('team_id'),
+            'priority'   => $request->input('priority'),
+            'status'     => $request->input('status'),
+            'category'   => $request->input('category'),
+            'start_date' => $request->input('start_date'),
+            'end_date'   => $request->input('end_date'),
+        ]);
+
+        $taskLists = [];
+
+        foreach($tasks as $task){
+            $taskLists[] = [
+                'id' => $task->id,
+                'title' => $task->title,
+                'description' => $task->description,
+                'category' => $task->category,
+                'priority' => $task->priority,
+                'status' => $task->status,
+                'created_at' => $task->created_at,
+                'updated_at' => $task->updated_at,
+                'assigned_to' => $task->teamMember->user->name,
+            ];
+        }
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Tasks retrieved successfully',
+            'data' => $taskLists
+        ];
     }
 
     public function list($teamId){
