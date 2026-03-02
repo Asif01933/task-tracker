@@ -27,7 +27,7 @@ class ReportService{
 
         //extracting last 'n' days report
         $team = $this->teamRepositoryInterface->findById($report->team_id);
-        $member = $this->memberRepositoryInterface->findTeamMember($report->team_id, $report->team_members_id);
+        $member = $this->memberRepositoryInterface->findTeamMember($report->team_id, $report->team_member_id);
         
 
         $startDate = $report->due_date;

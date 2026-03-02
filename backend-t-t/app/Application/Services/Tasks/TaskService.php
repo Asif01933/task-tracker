@@ -94,4 +94,26 @@ class TaskService{
             'data' => $tasks
         ];
     }
+
+    public function view($team, $task){
+
+        if(!$team || !$task){
+            throw new \Exception("Team or task not found");
+        }
+
+        if(!$team->teamMembers()->where('user_id', auth()->user()->id)->exists()){
+            throw new \Exception("You are not a member of this team");
+        }
+        
+        if(!$task->team_id == $team->id){
+            throw new \Exception("Task is not associated with this team");
+        }
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Task retrieved successfully',
+            'data' => $task
+        ];
+    }
 }

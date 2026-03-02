@@ -1,12 +1,13 @@
 <?php 
 namespace App\Http\Controllers\Tasks;
 
-use App\Models\Task;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Tasks\TasksRequest;
-use App\Http\Requests\Tasks\TaskCreateRequest;
-use App\Http\Requests\Tasks\TaskUpdateRequest;
 use App\Application\Services\Tasks\TaskService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Tasks\TaskCreateRequest;
+use App\Http\Requests\Tasks\TasksRequest;
+use App\Http\Requests\Tasks\TaskUpdateRequest;
+use App\Models\Task;
+use App\Models\Team;
 
 class TaskController extends Controller{
 
@@ -36,5 +37,9 @@ class TaskController extends Controller{
     }
     public function selfTasks(){
         return response()->json($this->taskService->selfTasks());
+    }
+
+    public function view(Team $team, Task $task){
+        return response()->json($this->taskService->view($team, $task));
     }
 }

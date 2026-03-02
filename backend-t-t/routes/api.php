@@ -42,7 +42,7 @@ Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('a
 Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/tasks/team/{team}', [TaskController::class, 'list'])->middleware('auth:sanctum');
 Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');Route::get('/tasks', [TaskController::class, 'tasks'])->middleware('auth:sanctum');
-
+Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view'])->middleware('auth:sanctum');
 //-----
 //Reports
 ///

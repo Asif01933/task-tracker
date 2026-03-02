@@ -5,7 +5,7 @@ use App\Application\Services\Reports\ReportService;
 use App\Models\Team;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
+use App\Models\Report;
 
 class ReportController extends Controller{
 
