@@ -23,4 +23,8 @@ class TeamMember extends Model{
     public function tasks(){
         return $this->hasMany(Task::class, 'team_member_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

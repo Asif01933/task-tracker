@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function teams(){
         return $this->hasMany(Team::class);
     }
+
+
+    public function teamMembers(){
+        return $this->hasMany(TeamMember::class);
+    }
 }

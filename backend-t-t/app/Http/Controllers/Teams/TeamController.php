@@ -38,4 +38,8 @@ class TeamController extends Controller{
         return response()->json($this->teamService->view($team));
     }
 
+    public function members(Team $team){
+        return response()->json($this->teamService->members($team));
+    }
+
 }

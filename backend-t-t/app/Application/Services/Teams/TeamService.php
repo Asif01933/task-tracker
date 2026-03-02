@@ -2,11 +2,12 @@
 
 namespace App\Application\Services\Teams;
 
-use Illuminate\Support\Str;
-use App\Models\TeamInvitation;
-use Illuminate\Support\Facades\Mail;
-use App\Infrastructure\Mail\TeamInvitationMail;
 use App\Domain\Interfaces\TeamRepositoryInterface;
+use App\Infrastructure\Mail\TeamInvitationMail;
+use App\Models\TeamInvitation;
+use App\Models\TeamMember;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class TeamService
 {
@@ -85,6 +86,39 @@ class TeamService
             'code' => 200,
             'message' => 'Team retrieved successfully',
             'data' => $team
+        ];
+    }
+
+
+    public function members($team){
+
+        if(!$team){
+            throw new \Exception("Team not found");
+        }
+
+        if(!$team->teamMembers()->where('user_id', auth()->user()->id)->exists()){
+            throw new \Exception("You are not a member of this team");
+        }
+
+        $members = [];
+
+        foreach($team->teamMembers as $member){
+            $members[] = [
+                'id' => $member->id,
+                'name' => $member->user->name,
+                'email' => $member->user->email,
+                'role' => $member->role,
+                'status' => $member->status,
+                
+            ];
+        }
+
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Team members retrieved successfully',
+            'data' => $members
         ];
     }
 

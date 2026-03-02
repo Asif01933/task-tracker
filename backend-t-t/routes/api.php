@@ -33,7 +33,7 @@ Route::patch('/teams/{team}', [TeamController::class, 'update'])->middleware('au
 Route::delete('/teams/{team}', [TeamController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/teams', [TeamController::class, 'myTeams'])->middleware('auth:sanctum');
 Route::get('/teams/{team}', [TeamController::class, 'view'])->middleware('auth:sanctum');
-
+Route::get('/teams/{team}/members', [TeamController::class, 'members'])->middleware('auth:sanctum');
 //--------------------
 // Task Routes
 //
