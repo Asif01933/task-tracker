@@ -38,13 +38,23 @@ Route::get('/teams/{team}', [TeamController::class, 'view'])
     ->middleware('auth:sanctum', 'team.context');
 Route::get('/teams/{team}/members', [TeamController::class, 'members'])
     ->middleware('auth:sanctum', 'team.context');
+
+
+/**
+ * * Team member controlling
+*/
+//below route will be responsible for changing the role of the team member and also for removing the team member from the team
+Route::patch('/teams/{team}/members/{member}', [MemberController::class, 'update'])
+    ->middleware('auth:sanctum', 'team.context', 'team.role:owner,admin');
+Route::delete('/teams/{team}/members/{member}', [MemberController::class, 'remove'])
+    ->middleware('auth:sanctum', 'team.context', 'team.role:owner,admin');
 //--------------------
 // Task Routes
 //
-Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
-Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
-Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
-Route::get('/tasks/team/{team}', [TaskController::class, 'tasks'])
+Route::post('/teams/{team}/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
+Route::patch('/teams/{team}/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
+Route::delete('/teams/{team}/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
+Route::get('/teams/{team}/tasks', [TaskController::class, 'tasks'])
     ->middleware('auth:sanctum', 'team.context');
 Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');
 
@@ -75,7 +85,9 @@ Route::prefix('teams/{team}/labels')->middleware('auth:sanctum', 'team.context')
     // -------------------------------------------------------------------------
     // Task label routes (attach / detach)
     // -------------------------------------------------------------------------
-Route::prefix('tasks/{task}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
+Route::prefix('teams/{team}/tasks/{task}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
     Route::post('/',             'attach');  // POST   /api/tasks/{task}/labels
     Route::delete('/{label}',    'detach');  // DELETE /api/tasks/{task}/labels/{label}
 });
+
+//below route is for role is responsible for getting all the roles.

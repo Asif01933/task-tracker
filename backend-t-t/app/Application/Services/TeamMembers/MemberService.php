@@ -45,4 +45,38 @@ class MemberService
             ]
         ];
     }
+
+
+    public function update($request, $teamId, $memberId){
+        $updatedMember = $this->memberRepository->updateMemberRoleOrRemove($teamId, $memberId, $request->all());
+        if (!$updatedMember) {
+            throw new \Exception("Member update is not successful");
+        }
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Member updated successfully',
+            'data' => [
+                'member_id' => $updatedMember->id,
+                'team_id' => $updatedMember->team_id,
+                'user_id' => $updatedMember->user_id,
+                'role' => $updatedMember->role,
+                'updated_at' => $updatedMember->updated_at
+            ]
+        ];
+    }   
+
+    public function remove($request, $teamId, $memberId){
+        $removedMember = $this->memberRepository->updateMemberRoleOrRemove($teamId, $memberId, ['action' => 'remove']);
+        if ($removedMember) {
+            throw new \Exception("Member removal is not successful");
+        }
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Member removed successfully',
+        ];
+    }
 }

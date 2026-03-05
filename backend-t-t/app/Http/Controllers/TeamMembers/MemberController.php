@@ -25,4 +25,12 @@ class MemberController extends Controller{
 
         return response()->json($this->memberService->myProfileUpdate($request));
     }
+
+    public function update(Request $request, $teamId, $memberId){
+        return response()->json($this->memberService->update($request, $teamId, $memberId));
+    }
+
+    public function remove(Request $request, $teamId, $memberId){
+        return response()->json($this->memberService->remove($request, $teamId, $memberId));
+    }
 }
