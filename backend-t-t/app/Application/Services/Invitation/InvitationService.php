@@ -43,13 +43,18 @@ class InvitationService
         if (! $invitation) {
             return false; // invalid or stolen token
         }
+        $role = $invitation->role ?? 'member';
         $data = [
             'team_id' => $invitation->team_id,
             'user_id' => $user->id,
-            'role' => 'member',
+            'role' => $role,
             'status' => 'active'
         ];
         $this->invitationReporistoryInterface->acceptInvitation($data);
+
+        $team = $invitation->team;
+        $user->assignRole($role, $team);
+
         $invitation->update(['status' => 'accepted']);
         return [
             'status' => true,

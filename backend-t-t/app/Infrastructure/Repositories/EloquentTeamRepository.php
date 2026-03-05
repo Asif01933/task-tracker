@@ -14,7 +14,7 @@ class EloquentTeamRepository implements TeamRepositoryInterface{
         TeamMember::create([
             'team_id' => $team->id,
             'user_id' => $team->owner_id,
-            'role' => 'admin',
+            'role' => 'owner',
             'status' => 'active'
         ]);
         

@@ -29,35 +29,43 @@ Route::patch('/me', [MemberController::class, 'myProfileUpdate'])->middleware('a
 Route::post('/teams', [TeamController::class, 'create'])->middleware('auth:sanctum');
 Route::post('/teams/invite', [InvitationController::class, 'invite'])->middleware('auth:sanctum');
 Route::post('/teams/invite/accept', [InvitationController::class, 'acceptInvitation'])->middleware('auth:sanctum');
-Route::patch('/teams/{team}', [TeamController::class, 'update'])->middleware('auth:sanctum');
-Route::delete('/teams/{team}', [TeamController::class, 'delete'])->middleware('auth:sanctum');
+Route::patch('/teams/{team}', [TeamController::class, 'update'])
+    ->middleware('auth:sanctum', 'team.context', 'team.role:owner,admin');
+Route::delete('/teams/{team}', [TeamController::class, 'delete'])
+    ->middleware('auth:sanctum', 'team.context', 'team.role:owner,admin');
 Route::get('/teams', [TeamController::class, 'myTeams'])->middleware('auth:sanctum');
-Route::get('/teams/{team}', [TeamController::class, 'view'])->middleware('auth:sanctum');
-Route::get('/teams/{team}/members', [TeamController::class, 'members'])->middleware('auth:sanctum');
+Route::get('/teams/{team}', [TeamController::class, 'view'])
+    ->middleware('auth:sanctum', 'team.context');
+Route::get('/teams/{team}/members', [TeamController::class, 'members'])
+    ->middleware('auth:sanctum', 'team.context');
 //--------------------
 // Task Routes
 //
 Route::post('/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
 Route::delete('/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
-Route::get('/tasks/team/{team}', [TaskController::class, 'tasks'])->middleware('auth:sanctum');
+Route::get('/tasks/team/{team}', [TaskController::class, 'tasks'])
+    ->middleware('auth:sanctum', 'team.context');
 Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');
 
-Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view'])->middleware('auth:sanctum');
+Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view'])
+    ->middleware('auth:sanctum', 'team.context');
 //-----
 //Reports
 ///
-Route::get('/reports/{team}/download', [ReportController::class, 'download'])->middleware('auth:sanctum');
+Route::get('/reports/{team}/download', [ReportController::class, 'download'])
+    ->middleware('auth:sanctum', 'team.context');
 Route::post('/reports/{report}/send', [ReportController::class, 'send'])->middleware('auth:sanctum');
 Route::post('/report-receivers', [ReportReceiverController::class, 'create'])->middleware('auth:sanctum');
-Route::get('/report-receivers/{team}', [ReportReceiverController::class, 'view'])->middleware('auth:sanctum');
+Route::get('/report-receivers/{team}', [ReportReceiverController::class, 'view'])
+    ->middleware('auth:sanctum', 'team.context');
 Route::patch('/report-receivers/{report_receiver}', [ReportReceiverController::class, 'update'])->middleware('auth:sanctum');
 
 
 // -------------------------------------------------------------------------
     // Label routes (team-scoped)
     // -------------------------------------------------------------------------
-Route::prefix('teams/{team}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
+Route::prefix('teams/{team}/labels')->middleware('auth:sanctum', 'team.context')->controller(LabelController::class)->group(function () {
     Route::get('/',          'index');    // GET    /api/teams/{team}/labels
     Route::post('/',         'store');    // POST   /api/teams/{team}/labels
     Route::put('/{label}',   'update');   // PUT    /api/teams/{team}/labels/{label}

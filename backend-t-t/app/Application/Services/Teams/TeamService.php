@@ -22,6 +22,9 @@ class TeamService
         if (!$team) {
             throw new \Exception("Team creation failed");
         }
+
+        $team->owner->assignRole('owner', $team);
+
         return [
             'status' => true,
             'code' => 200,

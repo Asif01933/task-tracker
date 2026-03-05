@@ -1,24 +1,40 @@
-<?php 
+<?php
+
 namespace App\Http\Controllers\Teams;
 
-use App\Models\Team;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Teams\TeamCreateRequest;
-use App\Http\Requests\Teams\TeamInviteRequest;
 use App\Http\Requests\Teams\TeamUpdateRequest;
 use App\Application\Services\Teams\TeamService;
-use App\Http\Requests\Teams\TeamInvitationAcceptRequest;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller{
+/**
+ * Team controller with team-based RBAC.
+ *
+ * Routes that include {team} use TeamContextMiddleware, so role checks are
+ * scoped to the current team. Example (when team context is set):
+ *
+ *   if (! $request->user()->hasRole('admin')) {
+ *       return response()->json(['message' => 'Forbidden'], 403);
+ *   }
+ *
+ * Or use the team.role middleware: 'team.role:owner,admin'
+ */
+class TeamController extends Controller
+{
+    public function __construct(private TeamService $teamService) {}
 
-    public function __construct(private TeamService $teamService){}
-    public function create(TeamCreateRequest $request){
-
+    public function create(TeamCreateRequest $request): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->create($request));
     }
 
-    public function update(TeamUpdateRequest $request, Team $team){
+    /**
+     * Update team. Restricted to owner/admin via team.role middleware.
+     */
+    public function update(TeamUpdateRequest $request, Team $team): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->update($request, $team));
     }
 
@@ -26,20 +42,26 @@ class TeamController extends Controller{
         return response()->json($this->teamService->myTeams($request));
     }
 
-    public function delete(Team $team){
+    /**
+     * Delete team. Restricted to owner/admin via team.role middleware.
+     */
+    public function delete(Team $team): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->delete($team));
     }
 
-    public function list(){
+    public function list(): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->list());
     }
 
-    public function view(Team $team){
+    public function view(Team $team): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->view($team));
     }
 
-    public function members(Team $team){
+    public function members(Team $team): \Illuminate\Http\JsonResponse
+    {
         return response()->json($this->teamService->members($team));
     }
-
 }
