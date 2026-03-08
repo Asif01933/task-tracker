@@ -14,21 +14,21 @@ class TaskController extends Controller{
 
     public function __construct(private TaskService $taskService){}
 
-    public function create(TaskCreateRequest $taskCreateRequest){
+    public function create(TaskCreateRequest $taskCreateRequest, Team $team){
 
-        return response()->json($this->taskService->create($taskCreateRequest));
+        return response()->json($this->taskService->create($taskCreateRequest, $team));
     }
 
-    public function update(TaskUpdateRequest $request, Task $task){
-        return response()->json($this->taskService->update($request, $task));
+    public function update(TaskUpdateRequest $request,Team $team, Task $task){
+        return response()->json($this->taskService->update($request, $task, $team));
     }
 
-    public function delete(Task $task){
-        return response()->json($this->taskService->delete($task));
+    public function delete(Team $team, Task $task){
+        return response()->json($this->taskService->delete($team, $task));
     }
 
-    public function tasks(TasksRequest $tasksRequest){
-        return response()->json($this->taskService->tasks($tasksRequest));
+    public function tasks(TasksRequest $tasksRequest, Team $team){
+        return response()->json($this->taskService->tasks($tasksRequest, $team));
     }
 
     public function list($teamId){

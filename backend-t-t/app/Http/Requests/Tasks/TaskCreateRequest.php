@@ -22,7 +22,7 @@ class TaskCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_id' => 'required|integer|exists:teams,id',
+            
             'title'   => 'required|string|max:255',
             'category' => 'required|string|' //make more validation
         ];

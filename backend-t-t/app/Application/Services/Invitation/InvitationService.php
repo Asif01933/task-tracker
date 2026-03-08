@@ -7,6 +7,7 @@ use App\Models\TeamInvitation;
 use Illuminate\Support\Facades\Mail;
 use App\Infrastructure\Mail\TeamInvitationMail;
 use App\Domain\Interfaces\InvitationReporistoryInterface;
+use Spatie\Permission\PermissionRegistrar;
 
 class InvitationService
 {
@@ -53,7 +54,11 @@ class InvitationService
         $this->invitationReporistoryInterface->acceptInvitation($data);
 
         $team = $invitation->team;
-        $user->assignRole($role, $team);
+        $permissionRegistrar = app(PermissionRegistrar::class);
+        $previousTeamId = $permissionRegistrar->getPermissionsTeamId();
+        $permissionRegistrar->setPermissionsTeamId($team->getKey());
+        $user->assignRole($role);
+        $permissionRegistrar->setPermissionsTeamId($previousTeamId);
 
         $invitation->update(['status' => 'accepted']);
         return [

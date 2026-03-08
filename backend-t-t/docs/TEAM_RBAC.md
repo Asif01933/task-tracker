@@ -141,9 +141,20 @@ Use `team.context` on every route that has a `{team}` parameter so that `$user->
    Holds role definitions (e.g. `name = 'admin'`, `guard_name = 'web'`). With teams enabled, `roles.team_id` can be used; in this app, roles are global (`team_id` null) and reused for all teams.
 
 2. **Assignments**  
-   When you call `$user->assignRole('admin', $team)`:
+   When you want to assign a role within a specific team:
    - Spatie finds (or creates) the role by name and guard.
    - It inserts a row in `model_has_roles` with `role_id`, `model_type`, `model_id` (user id), and `team_id` = `$team->id`.
+
+   **Important:** `assignRole()` does not take a `Team` model as a second parameter; if you pass `$team` as an extra argument it will be treated as another “role” and can trigger a type error.
+
+   Use team context instead:
+
+   ```php
+   $previousTeamId = getPermissionsTeamId();
+   setPermissionsTeamId($team->id);
+   $user->assignRole('admin');
+   setPermissionsTeamId($previousTeamId);
+   ```
 
 3. **Team context**  
    `PermissionRegistrar::setPermissionsTeamId($teamId)` sets the “current team” for the request. When you then call `$user->hasRole('admin')`:
@@ -151,8 +162,8 @@ Use `team.context` on every route that has a `{team}` parameter so that `$user->
    - So the same user can be “admin” in one team and “member” in another.
 
 4. **When roles are assigned in this app**
-   - **Team creation:** The creator is added as a `TeamMember` with role `owner` and `$team->owner->assignRole('owner', $team)` is called in `TeamService::create`.
-   - **Invitation accept:** When a user accepts an invite, a `TeamMember` is created and `$user->assignRole($role, $team)` is called in `InvitationService::acceptInvitation` (default role `member` if not specified on the invitation).
+   - **Team creation:** The creator is added as a `TeamMember` with role `owner` and `TeamService::create` assigns the Spatie role within the new team context.
+   - **Invitation accept:** When a user accepts an invite, a `TeamMember` is created and `InvitationService::acceptInvitation` assigns the Spatie role within the invitation’s team context (default role `member` if not specified on the invitation).
 
 5. **`team_members.role`**  
    The existing `team_members` table still stores a role string for app-specific use (e.g. display). Spatie’s `model_has_roles` is the source of truth for authorization; keep `team_members.role` in sync when assigning or changing roles (as done in team create and invite accept).

@@ -8,6 +8,7 @@ use App\Models\TeamInvitation;
 use App\Models\TeamMember;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Spatie\Permission\PermissionRegistrar;
 
 class TeamService
 {
@@ -23,7 +24,11 @@ class TeamService
             throw new \Exception("Team creation failed");
         }
 
-        $team->owner->assignRole('owner', $team);
+        $permissionRegistrar = app(PermissionRegistrar::class);
+        $previousTeamId = $permissionRegistrar->getPermissionsTeamId();
+        $permissionRegistrar->setPermissionsTeamId($team->getKey());
+        $team->owner->assignRole('owner');
+        $permissionRegistrar->setPermissionsTeamId($previousTeamId);
 
         return [
             'status' => true,
