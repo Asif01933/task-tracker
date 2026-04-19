@@ -60,6 +60,9 @@ Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('aut
 
 Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view'])
     ->middleware('auth:sanctum', 'team.context');
+
+Route::post('/teams/{team}/member-daily-tasks', [TaskController::class, 'storeMemberDailyTask'])
+    ->middleware('auth:sanctum', 'team.context');
 //-----
 //Reports
 ///

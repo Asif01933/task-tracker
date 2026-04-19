@@ -4,8 +4,9 @@ namespace App\Application\Services\Tasks;
 
 use App\Domain\Interfaces\MemberRepositoryInterface;
 use App\Domain\Interfaces\TaskRepositoryInterface;
-use App\Domain\Interfaces\TeamRepositoryInterface;
-use App\Models\TeamMember;
+use App\Models\Team;
+use Carbon\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class TaskService
 {
@@ -182,6 +183,44 @@ class TaskService
             'code' => 200,
             'message' => 'Task retrieved successfully',
             'data' => $task
+        ];
+    }
+
+    public function storeMemberDailyTask(array $validated, Team $team, int $userId): array
+    {
+        $teamMember = $this->memberRepositoryInterface->findTeamMember($team->id, $userId);
+        if (! $teamMember) {
+            throw new \Exception('You are not a member of this team');
+        }
+
+        $planDate = Carbon::parse($validated['plan_date'])->toDateString();
+
+        $task = $this->taskRepositoryInterface->findInTeam($validated['task_id'], $team->id);
+        if (! $task) {
+            throw new \Exception('Task not found on this team');
+        }
+
+        if ($this->taskRepositoryInterface->memberDailyTaskExistsForMemberTaskAndDate(
+            $teamMember->id,
+            $task->id,
+            $planDate
+        )) {
+            throw ValidationException::withMessages([
+                'task_id' => ['This task is already on your list for that day.'],
+            ]);
+        }
+
+        $memberDailyTask = $this->taskRepositoryInterface->createMemberDailyTask([
+            'team_member_id' => $teamMember->id,
+            'task_id' => $task->id,
+            'plan_date' => $planDate,
+        ]);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Task added to your day successfully',
+            'data' => $memberDailyTask,
         ];
     }
 }

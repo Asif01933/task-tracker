@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Tasks;
 
 use App\Application\Services\Tasks\TaskService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tasks\MemberDailyTaskStoreRequest;
 use App\Http\Requests\Tasks\TaskCreateRequest;
 use App\Http\Requests\Tasks\TasksRequest;
 use App\Http\Requests\Tasks\TaskUpdateRequest;
@@ -41,5 +42,16 @@ class TaskController extends Controller{
 
     public function view(Team $team, Task $task){
         return response()->json($this->taskService->view($team, $task));
+    }
+
+    public function storeMemberDailyTask(MemberDailyTaskStoreRequest $request, Team $team)
+    {
+        return response()->json(
+            $this->taskService->storeMemberDailyTask(
+                $request->validated(),
+                $team,
+                (int) $request->user()->id
+            )
+        );
     }
 }

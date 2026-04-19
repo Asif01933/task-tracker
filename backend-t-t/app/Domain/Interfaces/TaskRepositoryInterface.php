@@ -10,5 +10,10 @@ interface TaskRepositoryInterface{
     public function getTasksByRange($startDate, $endDate, $teamId, $memberId);
     public function listByTeam($teamId);
     public function listByMember($memberId);
-    
+
+    public function findInTeam($taskId, $teamId);
+
+    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate);
+
+    public function createMemberDailyTask(array $data);
 }

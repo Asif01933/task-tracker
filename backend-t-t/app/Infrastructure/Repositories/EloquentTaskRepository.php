@@ -2,11 +2,9 @@
 
 namespace App\Infrastructure\Repositories;
 
+use App\Models\MemberDailyTask;
 use App\Models\Task;
-use App\Models\User;
-use App\Models\TeamMember;
 use App\Domain\Interfaces\TaskRepositoryInterface;
-use App\Domain\Interfaces\MemberRepositoryInterface;
 
 class EloquentTaskRepository implements TaskRepositoryInterface
 {
@@ -79,5 +77,33 @@ class EloquentTaskRepository implements TaskRepositoryInterface
     public function listByMember($memberId)
     {
         return Task::where('team_member_id', $memberId)->get();
+    }
+
+    public function findInTeam($taskId, $teamId)
+    {
+        return Task::query()
+            ->whereKey($taskId)
+            ->where('team_id', $teamId)
+            ->first();
+    }
+
+    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate)
+    {
+        return MemberDailyTask::query()
+            ->where('team_member_id', $teamMemberId)
+            ->where('task_id', $taskId)
+            ->whereDate('plan_date', $planDate)
+            ->exists();
+    }
+
+    public function createMemberDailyTask(array $data)
+    {
+        $memberDailyTask = MemberDailyTask::create($data);
+
+        $memberDailyTask->load([
+            'task' => fn ($q) => $q->select('id', 'team_id', 'title', 'status', 'category'),
+        ]);
+
+        return $memberDailyTask;
     }
 }

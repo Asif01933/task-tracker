@@ -32,5 +32,9 @@ class Task extends Model
     public function labels(){
         return $this->belongsToMany(Label::class);
     }
-    
+
+    public function memberDailyTasks()
+    {
+        return $this->hasMany(MemberDailyTask::class);
+    }
 }
