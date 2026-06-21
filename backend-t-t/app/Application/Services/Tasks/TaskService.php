@@ -26,7 +26,7 @@ class TaskService
         if (!$teamMember) {
             throw new \Exception("You are not a member of this team");
         }
-        $validatedData['team_member_id'] = $teamMember->id;
+        $validatedData['assigned_to'] = $teamMember->id;
         $validatedData['team_id'] = $team->id;
 
 
@@ -106,7 +106,7 @@ class TaskService
 
 
         $tasks = $this->taskRepositoryInterface->tasks([
-            'user_id'    => $request->input('user_id'),
+            'assigned_to' => $request->input('assigned_to'),
             'team_id'    => $team->id,
             'priority'   => $request->input('priority'),
             'status'     => $request->input('status'),
@@ -121,7 +121,7 @@ class TaskService
             $taskLists[] = [
                 'id' => $task->id,
                 'title' => $task->title,
-                'description' => $task->description,
+                'problem_description' => $task->problem_description,
                 'category' => $task->category,
                 'priority' => $task->priority,
                 'status' => $task->status,

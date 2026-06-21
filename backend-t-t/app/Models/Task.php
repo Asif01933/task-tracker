@@ -14,15 +14,26 @@ class Task extends Model
     protected $fillable = [
         'uuid',
         'team_id',
-        'team_member_id',
+        'assigned_to',
         'title',
-        'description',
+        'problem_description',
         'category',
-        'status'
+        'priority',
+        'status',
+        'solution_description',
+        'reporter_name',
+        'reporter_type',
+        'raised_at',
+        'entry_maker',
     ];
 
     public function teamMember(){
-        return $this->belongsTo(TeamMember::class);
+        return $this->belongsTo(TeamMember::class, 'assigned_to');
+    }
+
+    public function entryMaker()
+    {
+        return $this->belongsTo(TeamMember::class, 'entry_maker');
     }
 
     public function team(){

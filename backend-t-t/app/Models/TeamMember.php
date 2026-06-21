@@ -21,7 +21,7 @@ class TeamMember extends Model{
     }
 
     public function tasks(){
-        return $this->hasMany(Task::class, 'team_member_id');
+        return $this->hasMany(Task::class, 'assigned_to');
     }
 
     public function memberDailyTasks()

@@ -58,7 +58,7 @@
                     @foreach($tasks as $task)
                         <tr>
                             <td>{{ $task['task'] }}</td>
-                            <td>{{ $task['description'] }}</td>
+                            <td>{{ $task['problem_description'] }}</td>
                             <td>{{ $task['status'] }}</td>
                         </tr>
                     @endforeach

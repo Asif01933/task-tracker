@@ -25,10 +25,10 @@ class TaskUpdateRequest extends FormRequest
             
             'category'    => 'sometimes|string|max:100',
             'title'       => 'sometimes|string|max:255',
-            'description' => 'sometimes|string|nullable',
+            'problem_description' => 'sometimes|string|nullable',
             'priority'    => 'sometimes|in:low,medium,high',
             'status'      => 'sometimes|in:pending,in progress,completed',
-            'member_id' => 'sometimes|exists:team_members,id',
+            'assigned_to' => 'sometimes|exists:team_members,id',
         ];
     }
 

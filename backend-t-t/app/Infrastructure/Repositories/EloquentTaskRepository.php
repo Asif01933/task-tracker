@@ -29,7 +29,7 @@ class EloquentTaskRepository implements TaskRepositoryInterface
     {
 
         return Task::where('team_id', $teamId)
-            ->where('team_member_id', $memberId)
+            ->where('assigned_to', $memberId)
             ->whereBetween('created_at', [$endDate, $startDate])
             ->get();
     }
@@ -38,8 +38,8 @@ class EloquentTaskRepository implements TaskRepositoryInterface
     {
         $query = Task::query();
 
-        if (array_key_exists('user_id', $filters) && $filters['user_id'] !== null) {
-            $query->where('user_id', $filters['user_id']);
+        if (array_key_exists('assigned_to', $filters) && $filters['assigned_to'] !== null) {
+            $query->where('assigned_to', $filters['assigned_to']);
         }
 
         if (array_key_exists('team_id', $filters) && $filters['team_id'] !== null) {
@@ -76,7 +76,7 @@ class EloquentTaskRepository implements TaskRepositoryInterface
 
     public function listByMember($memberId)
     {
-        return Task::where('team_member_id', $memberId)->get();
+        return Task::where('assigned_to', $memberId)->get();
     }
 
     public function findInTeam($taskId, $teamId)
