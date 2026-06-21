@@ -13,6 +13,7 @@ class MemberDailyTask extends Model
         'team_member_id',
         'task_id',
         'plan_date',
+        'task_note',
     ];
 
     protected function casts(): array

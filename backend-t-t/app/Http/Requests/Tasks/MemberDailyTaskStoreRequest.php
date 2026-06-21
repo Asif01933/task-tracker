@@ -44,6 +44,7 @@ class MemberDailyTaskStoreRequest extends FormRequest
                 ),
             ],
             'plan_date' => ['required', 'date'],
+            'task_note' => ['nullable', 'string'],
         ];
     }
 }

@@ -214,6 +214,7 @@ class TaskService
             'team_member_id' => $teamMember->id,
             'task_id' => $task->id,
             'plan_date' => $planDate,
+            'task_note' => $validated['task_note'] ?? null,
         ]);
 
         return [
