@@ -88,9 +88,9 @@ Route::prefix('teams/{team}/labels')->middleware('auth:sanctum', 'team.context')
     // -------------------------------------------------------------------------
     // Task label routes (attach / detach)
     // -------------------------------------------------------------------------
-Route::prefix('teams/{team}/tasks/{task}/labels')->middleware('auth:sanctum')->controller(LabelController::class)->group(function () {
-    Route::post('/',             'attach');  // POST   /api/tasks/{task}/labels
-    Route::delete('/{label}',    'detach');  // DELETE /api/tasks/{task}/labels/{label}
+Route::prefix('teams/{team}/tasks/{task}/labels')->middleware('auth:sanctum', 'team.context')->controller(LabelController::class)->group(function () {
+    Route::post('/',             'attach');  // POST   /api/teams/{team}/tasks/{task}/labels
+    Route::delete('/{label}',    'detach');  // DELETE /api/teams/{team}/tasks/{task}/labels/{label}
 });
 
 //below route is for role is responsible for getting all the roles.
