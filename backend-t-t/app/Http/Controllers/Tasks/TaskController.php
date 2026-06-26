@@ -9,6 +9,7 @@ use App\Http\Requests\Tasks\TasksRequest;
 use App\Http\Requests\Tasks\TaskUpdateRequest;
 use App\Models\Task;
 use App\Models\Team;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller{
 
@@ -16,19 +17,26 @@ class TaskController extends Controller{
     public function __construct(private TaskService $taskService){}
 
     public function create(TaskCreateRequest $taskCreateRequest, Team $team){
+        Gate::authorize('create', [Task::class, $team]);
 
         return response()->json($this->taskService->create($taskCreateRequest, $team));
     }
 
     public function update(TaskUpdateRequest $request,Team $team, Task $task){
+        Gate::authorize('update', [$task, $team]);
+
         return response()->json($this->taskService->update($request, $task, $team));
     }
 
     public function delete(Team $team, Task $task){
+        Gate::authorize('delete', [$task, $team]);
+
         return response()->json($this->taskService->delete($team, $task));
     }
 
     public function tasks(TasksRequest $tasksRequest, Team $team){
+        Gate::authorize('viewAny', [Task::class, $team]);
+
         return response()->json($this->taskService->tasks($tasksRequest, $team));
     }
 
@@ -41,6 +49,8 @@ class TaskController extends Controller{
     }
 
     public function view(Team $team, Task $task){
+        Gate::authorize('view', [$task, $team]);
+
         return response()->json($this->taskService->view($team, $task));
     }
 

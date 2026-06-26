@@ -51,18 +51,17 @@ Route::delete('/teams/{team}/members/{member}', [MemberController::class, 'remov
 //--------------------
 // Task Routes
 //
-Route::post('/teams/{team}/tasks', [TaskController::class, 'create'])->middleware('auth:sanctum');
-Route::patch('/teams/{team}/tasks/{task}', [TaskController::class, 'update'] )->middleware('auth:sanctum');
-Route::delete('/teams/{team}/tasks/{task}', [TaskController::class, 'delete'])->middleware('auth:sanctum');
-Route::get('/teams/{team}/tasks', [TaskController::class, 'tasks'])
-    ->middleware('auth:sanctum', 'team.context');
+Route::scopeBindings()
+    ->middleware(['auth:sanctum', 'team.context'])
+    ->group(function () {
+        Route::post('/teams/{team}/tasks', [TaskController::class, 'create']);
+        Route::patch('/teams/{team}/tasks/{task}', [TaskController::class, 'update']);
+        Route::delete('/teams/{team}/tasks/{task}', [TaskController::class, 'delete']);
+        Route::get('/teams/{team}/tasks', [TaskController::class, 'tasks']);
+        Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view']);
+        Route::post('/teams/{team}/member-daily-tasks', [TaskController::class, 'storeMemberDailyTask']);
+    });
 Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');
-
-Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view'])
-    ->middleware('auth:sanctum', 'team.context');
-
-Route::post('/teams/{team}/member-daily-tasks', [TaskController::class, 'storeMemberDailyTask'])
-    ->middleware('auth:sanctum', 'team.context');
 //-----
 //Reports
 ///
@@ -88,7 +87,7 @@ Route::prefix('teams/{team}/labels')->middleware('auth:sanctum', 'team.context')
     // -------------------------------------------------------------------------
     // Task label routes (attach / detach)
     // -------------------------------------------------------------------------
-Route::prefix('teams/{team}/tasks/{task}/labels')->middleware('auth:sanctum', 'team.context')->controller(LabelController::class)->group(function () {
+Route::scopeBindings()->prefix('teams/{team}/tasks/{task}/labels')->middleware('auth:sanctum', 'team.context')->controller(LabelController::class)->group(function () {
     Route::post('/',             'attach');  // POST   /api/teams/{team}/tasks/{task}/labels
     Route::delete('/{label}',    'detach');  // DELETE /api/teams/{team}/tasks/{task}/labels/{label}
 });

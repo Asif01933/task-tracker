@@ -53,7 +53,7 @@ class TaskService
         if (!$team->teamMembers()->where('user_id', $request->user()->id)->exists()) {
             throw new \Exception("You are not a member of this team");
         }
-        if (!$task->team_id == $team->id) {
+        if ((int) $task->team_id !== (int) $team->id) {
             throw new \Exception("Task is not associated with this team");
         }
 
@@ -79,7 +79,7 @@ class TaskService
         if(!$team->teamMembers()->where('user_id', auth()->user()->id)->exists()){
             throw new \Exception("You are not a member of this team");
         }
-        if(!$task->team_id == $team->id){
+        if((int) $task->team_id !== (int) $team->id){
             throw new \Exception("Task is not associated with this team");
         }
 
@@ -174,7 +174,7 @@ class TaskService
             throw new \Exception("You are not a member of this team");
         }
 
-        if (!$task->team_id == $team->id) {
+        if ((int) $task->team_id !== (int) $team->id) {
             throw new \Exception("Task is not associated with this team");
         }
 
