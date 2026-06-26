@@ -8,6 +8,7 @@ use App\Http\Requests\Teams\TeamUpdateRequest;
 use App\Application\Services\Teams\TeamService;
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Team controller with team-based RBAC.
@@ -57,11 +58,15 @@ class TeamController extends Controller
 
     public function view(Team $team): \Illuminate\Http\JsonResponse
     {
+        Gate::authorize('view', $team);
+
         return response()->json($this->teamService->view($team));
     }
 
     public function members(Team $team): \Illuminate\Http\JsonResponse
     {
+        Gate::authorize('members', $team);
+
         return response()->json($this->teamService->members($team));
     }
 }
