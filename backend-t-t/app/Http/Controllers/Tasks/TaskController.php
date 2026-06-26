@@ -3,12 +3,16 @@ namespace App\Http\Controllers\Tasks;
 
 use App\Application\Services\Tasks\TaskService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Tasks\MemberDailyTaskListRequest;
 use App\Http\Requests\Tasks\MemberDailyTaskStoreRequest;
+use App\Http\Requests\Tasks\MemberDailyTaskUpdateRequest;
 use App\Http\Requests\Tasks\TaskCreateRequest;
 use App\Http\Requests\Tasks\TasksRequest;
 use App\Http\Requests\Tasks\TaskUpdateRequest;
+use App\Models\MemberDailyTask;
 use App\Models\Task;
 use App\Models\Team;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller{
@@ -60,6 +64,51 @@ class TaskController extends Controller{
             $this->taskService->storeMemberDailyTask(
                 $request->validated(),
                 $team,
+                (int) $request->user()->id
+            )
+        );
+    }
+
+    public function listMemberDailyTasks(MemberDailyTaskListRequest $request, Team $team)
+    {
+        return response()->json(
+            $this->taskService->listMemberDailyTasks(
+                $request->validated(),
+                $team,
+                (int) $request->user()->id
+            )
+        );
+    }
+
+    public function updateMemberDailyTask(MemberDailyTaskUpdateRequest $request, Team $team, MemberDailyTask $memberDailyTask)
+    {
+        return response()->json(
+            $this->taskService->updateMemberDailyTask(
+                $request->validated(),
+                $team,
+                $memberDailyTask,
+                (int) $request->user()->id
+            )
+        );
+    }
+
+    public function deleteMemberDailyTask(Request $request, Team $team, MemberDailyTask $memberDailyTask)
+    {
+        return response()->json(
+            $this->taskService->deleteMemberDailyTask(
+                $team,
+                $memberDailyTask,
+                (int) $request->user()->id
+            )
+        );
+    }
+
+    public function completeMemberDailyTask(Request $request, Team $team, MemberDailyTask $memberDailyTask)
+    {
+        return response()->json(
+            $this->taskService->completeMemberDailyTask(
+                $team,
+                $memberDailyTask,
                 (int) $request->user()->id
             )
         );

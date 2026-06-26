@@ -4,6 +4,7 @@ namespace App\Application\Services\Tasks;
 
 use App\Domain\Interfaces\MemberRepositoryInterface;
 use App\Domain\Interfaces\TaskRepositoryInterface;
+use App\Models\MemberDailyTask;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
@@ -223,5 +224,116 @@ class TaskService
             'message' => 'Task added to your day successfully',
             'data' => $memberDailyTask,
         ];
+    }
+
+    public function listMemberDailyTasks(array $filters, Team $team, int $userId): array
+    {
+        $teamMember = $this->findCurrentTeamMember($team, $userId);
+
+        $filters['plan_date'] = isset($filters['plan_date'])
+            ? Carbon::parse($filters['plan_date'])->toDateString()
+            : Carbon::today()->toDateString();
+
+        $memberDailyTasks = $this->taskRepositoryInterface->listMemberDailyTasks(
+            $teamMember->id,
+            $filters
+        );
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Daily tasks retrieved successfully',
+            'data' => $memberDailyTasks,
+        ];
+    }
+
+    public function updateMemberDailyTask(array $validated, Team $team, MemberDailyTask $memberDailyTask, int $userId): array
+    {
+        $teamMember = $this->findCurrentTeamMember($team, $userId);
+        $this->authorizeMemberDailyTask($memberDailyTask, $teamMember->id, $team->id);
+
+        $taskId = $validated['task_id'] ?? $memberDailyTask->task_id;
+        $planDate = isset($validated['plan_date'])
+            ? Carbon::parse($validated['plan_date'])->toDateString()
+            : $memberDailyTask->plan_date->toDateString();
+
+        $task = $this->taskRepositoryInterface->findInTeam($taskId, $team->id);
+        if (! $task) {
+            throw new \Exception('Task not found on this team');
+        }
+
+        if ($this->taskRepositoryInterface->memberDailyTaskExistsForMemberTaskAndDate(
+            $teamMember->id,
+            $taskId,
+            $planDate,
+            $memberDailyTask->id
+        )) {
+            throw ValidationException::withMessages([
+                'task_id' => ['This task is already on your list for that day.'],
+            ]);
+        }
+
+        $validated['plan_date'] = $planDate;
+
+        $memberDailyTask = $this->taskRepositoryInterface->updateMemberDailyTask(
+            $memberDailyTask,
+            $validated
+        );
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Daily task updated successfully',
+            'data' => $memberDailyTask,
+        ];
+    }
+
+    public function deleteMemberDailyTask(Team $team, MemberDailyTask $memberDailyTask, int $userId): array
+    {
+        $teamMember = $this->findCurrentTeamMember($team, $userId);
+        $this->authorizeMemberDailyTask($memberDailyTask, $teamMember->id, $team->id);
+
+        $this->taskRepositoryInterface->deleteMemberDailyTask($memberDailyTask);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Daily task removed successfully',
+        ];
+    }
+
+    public function completeMemberDailyTask(Team $team, MemberDailyTask $memberDailyTask, int $userId): array
+    {
+        $teamMember = $this->findCurrentTeamMember($team, $userId);
+        $this->authorizeMemberDailyTask($memberDailyTask, $teamMember->id, $team->id);
+
+        $memberDailyTask = $this->taskRepositoryInterface->completeMemberDailyTask($memberDailyTask);
+
+        return [
+            'status' => true,
+            'code' => 200,
+            'message' => 'Daily task completed successfully',
+            'data' => $memberDailyTask,
+        ];
+    }
+
+    private function findCurrentTeamMember(Team $team, int $userId)
+    {
+        $teamMember = $this->memberRepositoryInterface->findTeamMember($team->id, $userId);
+
+        if (! $teamMember) {
+            throw new \Exception('You are not a member of this team');
+        }
+
+        return $teamMember;
+    }
+
+    private function authorizeMemberDailyTask(MemberDailyTask $memberDailyTask, string $teamMemberId, int $teamId): void
+    {
+        $memberDailyTask->loadMissing('task');
+
+        if ($memberDailyTask->team_member_id !== $teamMemberId || (int) $memberDailyTask->task->team_id !== $teamId) {
+            throw new \Exception('Daily task not found on this team');
+        }
     }
 }

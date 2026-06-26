@@ -28,6 +28,18 @@ class Team extends Model
         return $this->hasMany(TeamMember::class);
     }
 
+    public function memberDailyTasks()
+    {
+        return $this->hasManyThrough(
+            MemberDailyTask::class,
+            TeamMember::class,
+            'team_id',
+            'team_member_id',
+            'id',
+            'id'
+        );
+    }
+
     public function tasks(){
         return $this->hasMany(Task::class);
     }

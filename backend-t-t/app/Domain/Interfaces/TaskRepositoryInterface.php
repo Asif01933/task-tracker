@@ -13,7 +13,15 @@ interface TaskRepositoryInterface{
 
     public function findInTeam($taskId, $teamId);
 
-    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate);
+    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate, $exceptId = null);
 
     public function createMemberDailyTask(array $data);
+
+    public function listMemberDailyTasks($teamMemberId, array $filters = []);
+
+    public function updateMemberDailyTask($memberDailyTask, array $data);
+
+    public function deleteMemberDailyTask($memberDailyTask);
+
+    public function completeMemberDailyTask($memberDailyTask);
 }

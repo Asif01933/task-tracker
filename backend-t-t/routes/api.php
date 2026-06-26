@@ -59,7 +59,11 @@ Route::scopeBindings()
         Route::delete('/teams/{team}/tasks/{task}', [TaskController::class, 'delete']);
         Route::get('/teams/{team}/tasks', [TaskController::class, 'tasks']);
         Route::get('/teams/{team}/tasks/{task}', [TaskController::class, 'view']);
+        Route::get('/teams/{team}/member-daily-tasks', [TaskController::class, 'listMemberDailyTasks']);
         Route::post('/teams/{team}/member-daily-tasks', [TaskController::class, 'storeMemberDailyTask']);
+        Route::patch('/teams/{team}/member-daily-tasks/{memberDailyTask}', [TaskController::class, 'updateMemberDailyTask']);
+        Route::patch('/teams/{team}/member-daily-tasks/{memberDailyTask}/complete', [TaskController::class, 'completeMemberDailyTask']);
+        Route::delete('/teams/{team}/member-daily-tasks/{memberDailyTask}', [TaskController::class, 'deleteMemberDailyTask']);
     });
 Route::get('/tasks/self', [TaskController::class, 'selfTasks'])->middleware('auth:sanctum');
 //-----

@@ -87,23 +87,77 @@ class EloquentTaskRepository implements TaskRepositoryInterface
             ->first();
     }
 
-    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate)
+    public function memberDailyTaskExistsForMemberTaskAndDate($teamMemberId, $taskId, $planDate, $exceptId = null)
     {
-        return MemberDailyTask::query()
+        $query = MemberDailyTask::query()
             ->where('team_member_id', $teamMemberId)
             ->where('task_id', $taskId)
-            ->whereDate('plan_date', $planDate)
-            ->exists();
+            ->whereDate('plan_date', $planDate);
+
+        if ($exceptId !== null) {
+            $query->whereKeyNot($exceptId);
+        }
+
+        return $query->exists();
     }
 
     public function createMemberDailyTask(array $data)
     {
         $memberDailyTask = MemberDailyTask::create($data);
 
-        $memberDailyTask->load([
-            'task' => fn ($q) => $q->select('id', 'team_id', 'title', 'status', 'category'),
-        ]);
+        $memberDailyTask->load($this->memberDailyTaskRelations());
 
         return $memberDailyTask;
+    }
+
+    public function listMemberDailyTasks($teamMemberId, array $filters = [])
+    {
+        $query = MemberDailyTask::query()
+            ->where('team_member_id', $teamMemberId)
+            ->with($this->memberDailyTaskRelations());
+
+        if (! empty($filters['plan_date'])) {
+            $query->whereDate('plan_date', $filters['plan_date']);
+        }
+
+        if (! empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        return $query
+            ->orderBy('plan_date')
+            ->latest()
+            ->get();
+    }
+
+    public function updateMemberDailyTask($memberDailyTask, array $data)
+    {
+        $memberDailyTask->fill($data);
+        $memberDailyTask->save();
+
+        return $memberDailyTask->load($this->memberDailyTaskRelations());
+    }
+
+    public function deleteMemberDailyTask($memberDailyTask)
+    {
+        return $memberDailyTask->delete();
+    }
+
+    public function completeMemberDailyTask($memberDailyTask)
+    {
+        $memberDailyTask->fill([
+            'status' => 'completed',
+            'completed_at' => now(),
+        ]);
+        $memberDailyTask->save();
+
+        return $memberDailyTask->load($this->memberDailyTaskRelations());
+    }
+
+    private function memberDailyTaskRelations(): array
+    {
+        return [
+            'task' => fn ($q) => $q->select('id', 'team_id', 'title', 'status', 'category', 'priority'),
+        ];
     }
 }

@@ -14,12 +14,15 @@ class MemberDailyTask extends Model
         'task_id',
         'plan_date',
         'task_note',
+        'status',
+        'completed_at',
     ];
 
     protected function casts(): array
     {
         return [
             'plan_date' => 'date',
+            'completed_at' => 'datetime',
         ];
     }
 
