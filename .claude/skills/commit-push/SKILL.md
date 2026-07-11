@@ -1,6 +1,6 @@
 ---
 name: commit-push
-description: Stage and commit the current changes with a well-formed message, then ask for confirmation before pushing to the remote. Use when the user says "commit and push", "commit this", or "/commit-push".
+description: Stage and commit the current changes with a well-formed message, then push to the remote automatically without asking for confirmation. Use when the user says "commit and push", "commit this", or "/commit-push".
 ---
 
 # Commit and push
@@ -40,12 +40,12 @@ If a pre-commit hook fails, fix the underlying issue, re-stage, and create a **n
 
 Run `git status` after committing to confirm success.
 
-## 5. Ask before pushing
+## 5. Push automatically
 
-Do not push automatically. Tell the user what would be pushed (branch name, upstream target, commit count ahead) and ask for explicit confirmation.
+Push immediately after committing, without asking for confirmation.
 
-- If the branch has no upstream, propose `git push -u origin <branch>`.
-- If it has an upstream, propose `git push`.
-- Never force-push (`--force`/`--force-with-lease`) unless the user explicitly asks for it in this same request, and warn if the target is `main`/`master`.
+- If the branch has no upstream, run `git push -u origin <branch>`.
+- If it has an upstream, run `git push`.
+- Never force-push (`--force`/`--force-with-lease`) — that always requires explicit user instruction in the same request, regardless of this skill's auto-push default.
 
-Only run the push command after the user confirms.
+After pushing, report what was pushed (branch name, commit(s)).
