@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // Run your report generation reminder command daily at 11:00 AM
-        $schedule->command('reports:send-team-member')->dailyAt('11:00');
+        $schedule->command('reports:send-teams')->dailyAt('11:00');
 
         // You can add more scheduled commands below if needed
         // Example: $schedule->command('emails:remind')->hourly();

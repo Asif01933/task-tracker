@@ -72,7 +72,7 @@ class ReportService{
             $dateWiseReport[$report->created_at][] = [
                 'date' => $report->created_at,
                 'task' => $report->title,
-                'description' => $report->description,
+                'description' => $report->problem_description,
                 'status' => $report->status
             ];
         }
